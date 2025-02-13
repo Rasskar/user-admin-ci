@@ -9,6 +9,7 @@ services:
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
+      - ./docker/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - db
       - redis
