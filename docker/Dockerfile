@@ -28,6 +28,6 @@ COPY .. /var/www/html/
 
 # Настраиваем права доступа
 RUN chown -R www-data:www-data /var/www/html/writable /var/www/html/public
-RUN chmod -R 775 /var/www/html/writable
+RUN chmod -R 777 /var/www/html/writable /var/www/html/writable/cache
 
 CMD ["php-fpm"]
