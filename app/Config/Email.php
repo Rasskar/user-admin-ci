@@ -28,7 +28,7 @@ class Email extends BaseConfig
     /**
      * SMTP Server Hostname
      */
-    public string $SMTPHost = 'ci_mailhog';
+    public string $SMTPHost = 'mailhog';
 
     /**
      * SMTP Username

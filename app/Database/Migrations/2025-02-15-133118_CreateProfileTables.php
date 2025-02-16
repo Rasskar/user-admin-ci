@@ -3,6 +3,7 @@
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Config\Database;
 
 class CreateProfileTables extends Migration
 {
@@ -52,6 +53,8 @@ class CreateProfileTables extends Migration
         $this->forge->addPrimaryKey('id');
         $this->forge->addForeignKey('user_id', 'users', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('profiles');
+
+        Database::seeder()->call('AdminSeeder');
     }
 
     public function down(): void

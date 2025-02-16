@@ -17,6 +17,14 @@
 CI_ENVIRONMENT = development
 
 #--------------------------------------------------------------------
+# Admin data
+#--------------------------------------------------------------------
+
+ADMIN_USERNAME = admin
+ADMIN_EMAIL = admin@example.com
+ADMIN_PASSWORD = admin1234
+
+#--------------------------------------------------------------------
 # APP
 #--------------------------------------------------------------------
 
@@ -40,23 +48,28 @@ database.default.port = 3306
 database.tests.charset = utf8mb4
 database.tests.DBCollat = utf8mb4_general_ci
 
+#--------------------------------------------------------------------
+# Redis Conf
+#--------------------------------------------------------------------
+
 redis.default.host = redis
 redis.default.port = 6379
 
-# Email Configuration
+#--------------------------------------------------------------------
+# Email Conf
+#--------------------------------------------------------------------
+
 email.fromEmail = "no-reply@user-admin-ci.com"
 email.fromName = "User Admin CI"
 email.protocol = "smtp"
-email.SMTPHost = "ci_mailhog"
+email.SMTPHost = "mailhog"
 email.SMTPUser = ""
 email.SMTPPass = ""
 email.SMTPPort = 1025
-email.SMTPCrypto = ""
+email.SMTPCrypto = ""  # Должно быть пустым
 email.mailType = "html"
 email.charset = "utf-8"
 email.wordWrap = true
-email.newline = "\r\n"
-email.crlf = "\r\n"
 
 
 # If you use MySQLi as tests, first update the values of Config\Database::$tests.
