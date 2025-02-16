@@ -13,6 +13,7 @@ services:
     depends_on:
       - db
       - redis
+      - mailpit
     networks:
       - ci4-network
 
@@ -54,9 +55,29 @@ services:
     networks:
       - ci4-network
 
+  mailpit:
+    image: axllent/mailpit
+    container_name: ci_mailpit
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "true"
+      MP_RELAY_HOST: "smtp.gmail.com"
+      MP_RELAY_PORT: "587"
+      MP_RELAY_USERNAME: "aleshkacygankov@gmail.com"
+      MP_RELAY_PASSWORD: "cla2208alex20azs"
+      MP_RELAY_TLS: "true"
+    volumes:
+      - mailpit_data:/data
+    networks:
+      - ci4-network
+
 volumes:
   mysql_data:
   redis_data:
+  mailpit_data:
 
 networks:
   ci4-network:

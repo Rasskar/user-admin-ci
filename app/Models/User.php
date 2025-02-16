@@ -6,25 +6,55 @@ use CodeIgniter\Shield\Models\UserModel as ShieldUserModel;
 
 class User extends ShieldUserModel
 {
-    protected $table         = 'users';
-    protected $primaryKey    = 'id';
-    protected $allowedFields = ['email', 'username', 'password_hash', 'profile_id'];
+    /**
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
+     * @var string[]
+     */
+    protected $allowedFields = [
+        'email',
+        'username',
+        'password_hash',
+        'profile_id'
+    ];
+
+    /**
+     * @var bool
+     */
     protected $useTimestamps = true;
 
-    // Указываем, что у пользователя есть профиль
-    public function profile()
+    /**
+     * @return Profile
+     */
+    public function profile(): Profile
     {
         return $this->hasOne(Profile::class, 'id', 'profile_id');
     }
 
-    // Автоматически создаём профиль при регистрации
-    protected function beforeInsert(array $data)
+    /**
+     * @param array $data
+     * @return array
+     * @throws \ReflectionException
+     */
+    protected function afterInsert(array $data): array
     {
-        $profileModel = new Profile();
-        $profileID = $profileModel->insert([], true);
+        $userID = $data['id'] ?? null;
 
-        if ($profileID) {
-            $data['data']['profile_id'] = $profileID;
+        if ($userID) {
+            $profile = new \App\Models\Profile();
+            $profileID = $profile->insert(['user_id' => $userID], true);
+
+            if ($profileID) {
+                $this->update($userID, ['profile_id' => $profileID]);
+            }
         }
 
         return $data;

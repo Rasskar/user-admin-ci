@@ -10,20 +10,16 @@ class AddProfileIdToUsers extends Migration
     {
         $this->forge->addColumn('users', [
             'profile_id' => [
-                'type'       => 'INT',
+                'type' => 'INT',
                 'constraint' => 11,
-                'unsigned'   => true,
-                'null'       => true,
-                'after'      => 'id',
+                'unsigned' => true,
+                'null' => true
             ],
         ]);
-
-        $this->forge->addForeignKey('profile_id', 'profiles', 'id', 'CASCADE', 'CASCADE');
     }
 
     public function down(): void
     {
-        $this->forge->dropForeignKey('users', 'users_profile_id_foreign');
         $this->forge->dropColumn('users', 'profile_id');
     }
 }
