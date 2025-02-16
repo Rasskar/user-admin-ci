@@ -7,6 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 //$routes->get('/', 'Home::index');
 
+$routes->get('test-email', 'Home::sendTestEmail');
+
 //$routes->get('auth', 'App\Modules\Auth\Controllers\AuthPageController::index', ['as' => 'auth']);
 
 $routes->group('', ['filter' => 'auth'], function ($routes) {
