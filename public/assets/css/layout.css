@@ -1,0 +1,130 @@
+body {
+    font-family: 'Inter', sans-serif !important;
+}
+
+.container-fluid .sidebar {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.container-fluid .sidebar .app-name {
+    font-weight: bold;
+    margin: 0;
+}
+
+.container-fluid .sidebar .mini-app-name {
+    font-weight: bold;
+    display: none;
+    margin: 0;
+}
+
+.container-fluid .sidebar hr {
+    margin: 30px 0;
+}
+
+.container-fluid .sidebar ul {
+    margin: 0!important;
+}
+
+.container-fluid .sidebar li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.container-fluid .sidebar i {
+    padding-right: 5px;
+    font-size: 18px;
+}
+
+.container-fluid .sidebar .logout-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 2px solid #dc3545;
+    color: #dc3545;
+    text-decoration: none;
+    border-radius: 5px;
+    /*margin-top: auto;*/
+    background: transparent;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.container-fluid .sidebar .logout-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.container-fluid .sidebar .mini-menu {
+    display: none;
+}
+
+.container-fluid .sidebar .mini-menu a {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.container-fluid .sidebar .mini-menu a.active {
+    padding: 5px;
+    background-color: #0d6efd;
+}
+
+
+@media (max-width: 1154px) {
+    .container-fluid .sidebar {
+        width: 10%;
+    }
+
+    .container-fluid .sidebar .app-name {
+        display: none;
+    }
+
+    .container-fluid .sidebar .mini-app-name {
+        display: block;
+    }
+
+    .container-fluid .sidebar i {
+        padding-right: 0;
+        font-size: 25px;
+    }
+
+    .container-fluid .sidebar span {
+        display: none;
+    }
+
+    .container-fluid .sidebar .logout-btn {
+        border: none;
+    }
+
+    .container-fluid .sidebar ul {
+        display: none;
+    }
+
+    .container-fluid .sidebar .mini-menu {
+        display: block;
+    }
+
+    .container-fluid .sidebar .mini-app-name {
+        display: block;
+    }
+}
+
+@media (max-width: 859px) {
+    .container-fluid .sidebar {
+        width: 15%;
+    }
+}
+
+@media (max-width: 559px) {
+    .container-fluid .sidebar {
+        width: 20%;
+    }
+}
+
+@media (max-width: 429px) {
+    .container-fluid .sidebar {
+        width: 25%;
+    }
+}

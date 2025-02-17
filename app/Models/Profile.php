@@ -25,11 +25,11 @@ class Profile extends Model
      * @var string[]
      */
     protected $allowedFields = [
+        'user_id',
         'first_name',
         'last_name',
         'description',
         'photo_link',
-        'telegram_nickname',
         'created_at',
         'updated_at'
     ];

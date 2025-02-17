@@ -9,23 +9,17 @@ use CodeIgniter\Shield\Authentication\Authenticators\Session;
 use CodeIgniter\Shield\Entities\Group;
 use CodeIgniter\Shield\Models\GroupModel;
 use CodeIgniter\Shield\Models\UserIdentityModel;
+use Config\Database;
 
 class Home extends BaseController
 {
     public function index(): string
     {
-
-
-
-        return view('welcome_message');
+        return view('users/profiles');
     }
 
     public function sendTest()
     {
-        $this->transactionDb = db_connect();
-        dd($this->transactionDb);
-
-
         $email = service('email');
 
         $email->setFrom('no-reply@user-admin-ci.com', 'User Admin CI');

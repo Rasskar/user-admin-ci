@@ -16,10 +16,10 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        try {
-            $db = db_connect();
-            $db->transBegin();
+        $db = db_connect();
+        $db->transBegin();
 
+        try {
             $hasAdmin = (new GroupModel())->where('group', 'admin')->first();
 
             if ($hasAdmin) {
