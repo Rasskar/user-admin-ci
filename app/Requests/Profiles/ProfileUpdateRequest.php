@@ -2,28 +2,12 @@
 
 namespace App\Requests\Profiles;
 
+use App\Modules\Infrastructure\Request\FormRequest;
 use CodeIgniter\Validation\Exceptions\ValidationException;
 use Config\Services;
 
-class ProfileUpdateRequest
+class ProfileUpdateRequest extends FormRequest
 {
-    public function __construct(
-        protected array $requestData
-    )
-    {
-    }
-
-    public function validate(): void
-    {
-        $validation = Services::validation();
-
-        $validation->setRules($this->rules(), $this->messages());
-
-        if (!$validation->run($this->requestData)) {
-            throw new ValidationException('Ошибка валидации', 422, $validation->getErrors());
-        }
-    }
-
     protected function rules(): array
     {
         return [

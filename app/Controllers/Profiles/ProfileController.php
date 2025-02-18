@@ -49,12 +49,14 @@ class ProfileController extends BaseController
         return $this->show($userId, 'edit');
     }
 
-    public function update()
+    public function update(ProfileUpdateRequest $request)
     {
-        try {
-            $requestData = array_merge($this->request->getPost(), $this->request->getFiles());
+        echo '<pre>';
+        print_r($request);
+        echo '</pre>';
 
-            (new ProfileUpdateRequest($requestData))->validate();
+        /*try {
+
 
 
             return $this->response->setStatusCode(200)->setJSON([
@@ -72,13 +74,6 @@ class ProfileController extends BaseController
                     'message' => 'Произошла внутренняя ошибка сервера.',
                     'error' => $exception->getMessage()
             ]);
-        }
-        echo "<pre>";
-        print_r(array_merge($this->request->getPost(), $this->request->getFiles()));
-        echo "</pre>";
-
-        echo "<pre>";
-        print_r($this->request);
-        echo "</pre>";
+        }*/
     }
 }
