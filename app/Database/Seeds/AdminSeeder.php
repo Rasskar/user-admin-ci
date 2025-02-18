@@ -34,7 +34,7 @@ class AdminSeeder extends Seeder
             ]);
 
             if (!$userId) {
-                throw new RuntimeException('Failed to insert user');
+                throw new RuntimeException('Failed to insert users');
             }
 
             $userIdentity = new UserIdentityModel();
@@ -47,9 +47,8 @@ class AdminSeeder extends Seeder
             ];
 
             if (!$userIdentity->insert($userIdentityAttributes)) {
-                throw new RuntimeException('Failed to insert user identity');
+                throw new RuntimeException('Failed to insert users identity');
             }
-
 
             $groupUser = new GroupModel();
             $groupUserAttributes = [
@@ -58,7 +57,7 @@ class AdminSeeder extends Seeder
             ];
 
             if (!$groupUser->insert($groupUserAttributes)) {
-                throw new RuntimeException('Failed to insert group-user');
+                throw new RuntimeException('Failed to insert group-users');
             }
 
             $profile = new Profile();

@@ -21,9 +21,9 @@ class AuthGroups extends ShieldAuthGroups
      * --------------------------------------------------------------------
      * Default Group
      * --------------------------------------------------------------------
-     * The group that a newly registered user is added to.
+     * The group that a newly registered users is added to.
      */
-    public string $defaultGroup = 'user';
+    public string $defaultGroup = 'users';
 
     /**
      * --------------------------------------------------------------------
@@ -34,7 +34,7 @@ class AuthGroups extends ShieldAuthGroups
      *
      * Whatever value you assign as the key will be used to refer to the group
      * when using functions such as:
-     *      $user->addGroup('superadmin');
+     *      $users->addGroup('superadmin');
      *
      * @var array<string, array<string, string>>
      *
@@ -45,7 +45,7 @@ class AuthGroups extends ShieldAuthGroups
             'title'       => 'Администратор',
             'description' => 'Полный доступ ко всем функциям системы.',
         ],
-        'user' => [
+        'users' => [
             'title'       => 'Пользователь',
             'description' => 'Обычный пользователь без дополнительных прав.',
         ],
@@ -71,6 +71,6 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $matrix = [
         'admin' => ['*'],
-        'user' => [],
+        'users' => [],
     ];
 }

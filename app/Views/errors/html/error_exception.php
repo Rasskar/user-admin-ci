@@ -194,7 +194,7 @@ $errorId = uniqid('error', true);
 
                 <!-- Constants -->
                 <?php $constants = get_defined_constants(true); ?>
-                <?php if (! empty($constants['user'])) : ?>
+                <?php if (! empty($constants['users'])) : ?>
                     <h3>Constants</h3>
 
                     <table>
@@ -205,7 +205,7 @@ $errorId = uniqid('error', true);
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($constants['user'] as $key => $value) : ?>
+                        <?php foreach ($constants['users'] as $key => $value) : ?>
                             <tr>
                                 <td><?= esc($key) ?></td>
                                 <td>

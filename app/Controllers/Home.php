@@ -22,7 +22,7 @@ class Home extends BaseController
     {
         $email = service('email');
 
-        $email->setFrom('no-reply@user-admin-ci.com', 'User Admin CI');
+        $email->setFrom('no-reply@users-admin-ci.com', 'User Admin CI');
         $email->setTo('test@example.com');
         $email->setSubject('Тестовое письмо от CodeIgniter');
         $email->setMessage('<p>Привет! Это тестовое письмо от CodeIgniter 4.</p>');

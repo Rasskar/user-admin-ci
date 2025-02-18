@@ -9,7 +9,7 @@ use CodeIgniter\Config\BaseConfig;
  * User Agents
  * -------------------------------------------------------------------
  *
- * This file contains four arrays of user agent data. It is used by the
+ * This file contains four arrays of users agent data. It is used by the
  * User Agent Class to help identify browser, platform, robot, and
  * mobile device data. The array keys are used to identify the device
  * and the array values are used to set the actual name of the item.
@@ -84,7 +84,7 @@ class UserAgents extends BaseConfig
         'Edge'   => 'Spartan',
         'Edg'    => 'Edge',
         'Chrome' => 'Chrome',
-        // Opera 10+ always reports Opera/9.80 and appends Version/<real version> to the user agent string
+        // Opera 10+ always reports Opera/9.80 and appends Version/<real version> to the users agent string
         'Opera.*?Version'   => 'Opera',
         'Opera'             => 'Opera',
         'MSIE'              => 'Internet Explorer',

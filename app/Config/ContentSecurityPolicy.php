@@ -31,7 +31,7 @@ class ContentSecurityPolicy extends BaseConfig
     public ?string $reportURI = null;
 
     /**
-     * Instructs user agents to rewrite URL schemes, changing
+     * Instructs users agents to rewrite URL schemes, changing
      * HTTP to HTTPS. This directive is for websites with
      * large numbers of old URLs that need to be rewritten.
      */

@@ -76,7 +76,7 @@ class AuthToken extends ShieldAuthToken
      * --------------------------------------------------------------------
      * HMAC encryption Keys
      * --------------------------------------------------------------------
-     * This sets the key to be used when encrypting a user's HMAC Secret Key.
+     * This sets the key to be used when encrypting a users's HMAC Secret Key.
      *
      * 'keys' is an array of keys which will facilitate key rotation. Valid
      *  keyTitles must include only [a-zA-Z0-9_] and should be kept to a

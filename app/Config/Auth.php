@@ -63,7 +63,7 @@ class Auth extends ShieldAuth
      * --------------------------------------------------------------------
      * Redirect URLs
      * --------------------------------------------------------------------
-     * The default URL that a user will be redirected to after various auth
+     * The default URL that a users will be redirected to after various auth
      * actions. This can be either of the following:
      *
      * 1. An absolute URL. E.g. http://example.com OR https://example.com
@@ -74,8 +74,8 @@ class Auth extends ShieldAuth
      * to apply any logic you may need.
      */
     public array $redirects = [
-        'register'          => '/',
-        'login'             => '/',
+        'register'          => '/profiles',
+        'login'             => '/profiles',
         'logout'            => 'login',
         'force_reset'       => '/',
         'permission_denied' => '/',
@@ -87,7 +87,7 @@ class Auth extends ShieldAuth
      * Authentication Actions
      * --------------------------------------------------------------------
      * Specifies the class that represents an action to take after
-     * the user logs in or registers a new account at the site.
+     * the users logs in or registers a new account at the site.
      *
      * You must register actions in the order of the actions to be performed.
      *
@@ -159,7 +159,7 @@ class Auth extends ShieldAuth
      * Record Last Active Date
      * --------------------------------------------------------------------
      * If true, will always update the `last_active` datetime for the
-     * logged-in user on every page request.
+     * logged-in users on every page request.
      * This feature only works when session/tokens filter is active.
      *
      * @see https://codeigniter4.github.io/shield/quick_start_guide/using_session_auth/#protecting-pages for set filters.
@@ -171,7 +171,7 @@ class Auth extends ShieldAuth
      * Allow Magic Link Logins
      * --------------------------------------------------------------------
      * If true, will allow the use of "magic links" sent via the email
-     * as a way to log a user in without the need for a password.
+     * as a way to log a users in without the need for a password.
      * By default, this is used in place of a password reset flow, but
      * could be modified as the only method of login once an account
      * has been set up.
@@ -194,15 +194,15 @@ class Auth extends ShieldAuth
      * These settings only apply if you are using the Session Authenticator
      * for authentication.
      *
-     * - field                  The name of the key the current user info is stored in session
+     * - field                  The name of the key the current users info is stored in session
      * - allowRemembering       Does the system allow use of "remember-me"
      * - rememberCookieName     The name of the cookie to use for "remember-me"
-     * - rememberLength         The length of time, in seconds, to remember a user.
+     * - rememberLength         The length of time, in seconds, to remember a users.
      *
      * @var array<string, bool|int|string>
      */
     public array $sessionConfig = [
-        'field'              => 'user',
+        'field'              => 'users',
         'allowRemembering'   => true,
         'rememberCookieName' => 'remember',
         'rememberLength'     => 30 * DAY,
@@ -420,7 +420,7 @@ class Auth extends ShieldAuth
      * --------------------------------------------------------------------
      * User Provider
      * --------------------------------------------------------------------
-     * The name of the class that handles user persistence.
+     * The name of the class that handles users persistence.
      * By default, this is the included UserModel, which
      * works with any of the database engines supported by CodeIgniter.
      * You can change it as long as they adhere to the
@@ -431,7 +431,7 @@ class Auth extends ShieldAuth
     public string $userProvider = UserModel::class;
 
     /**
-     * Returns the URL that a user should be redirected
+     * Returns the URL that a users should be redirected
      * to after a successful login.
      */
     public function loginRedirect(): string
@@ -443,7 +443,7 @@ class Auth extends ShieldAuth
     }
 
     /**
-     * Returns the URL that a user should be redirected
+     * Returns the URL that a users should be redirected
      * to after they are logged out.
      */
     public function logoutRedirect(): string
@@ -454,7 +454,7 @@ class Auth extends ShieldAuth
     }
 
     /**
-     * Returns the URL the user should be redirected to
+     * Returns the URL the users should be redirected to
      * after a successful registration.
      */
     public function registerRedirect(): string
@@ -465,7 +465,7 @@ class Auth extends ShieldAuth
     }
 
     /**
-     * Returns the URL the user should be redirected to
+     * Returns the URL the users should be redirected to
      * if force_reset identity is set to true.
      */
     public function forcePasswordResetRedirect(): string
@@ -476,7 +476,7 @@ class Auth extends ShieldAuth
     }
 
     /**
-     * Returns the URL the user should be redirected to
+     * Returns the URL the users should be redirected to
      * if permission denied.
      */
     public function permissionDeniedRedirect(): string
@@ -487,7 +487,7 @@ class Auth extends ShieldAuth
     }
 
     /**
-     * Returns the URL the user should be redirected to
+     * Returns the URL the users should be redirected to
      * if group denied.
      */
     public function groupDeniedRedirect(): string

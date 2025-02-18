@@ -350,7 +350,7 @@ class Mimes
             'text/json',
         ],
         'pem' => [
-            'application/x-x509-user-cert',
+            'application/x-x509-users-cert',
             'application/x-pem-file',
             'application/octet-stream',
         ],
@@ -372,7 +372,7 @@ class Mimes
         'p7s' => 'application/pkcs7-signature',
         'crt' => [
             'application/x-x509-ca-cert',
-            'application/x-x509-user-cert',
+            'application/x-x509-users-cert',
             'application/pkix-cert',
         ],
         'crl' => [

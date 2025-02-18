@@ -19,7 +19,7 @@ class Encryption extends BaseConfig
      *
      * If you use the Encryption class you must set an encryption key (seed).
      * You need to ensure it is long enough for the cipher and mode you plan to use.
-     * See the user guide for more info.
+     * See the users guide for more info.
      */
     public string $key = '';
 
@@ -44,7 +44,7 @@ class Encryption extends BaseConfig
      * This is the number of bytes that will be padded to the plaintext message
      * before it is encrypted. This value should be greater than zero.
      *
-     * See the user guide for more information on padding.
+     * See the users guide for more information on padding.
      */
     public int $blockSize = 16;
 

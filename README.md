@@ -2,7 +2,7 @@
 
 1. Клонируем проект
 ```bash
-git clone git@github.com:Rasskar/user-admin-ci.git
+git clone git@github.com:Rasskar/users-admin-ci.git
 ```
 2. Создаём env из шаблона
 ```bash

@@ -25,7 +25,7 @@ class Logger extends BaseConfig
      * - 4 = Runtime Errors - Don't need immediate action, but should be monitored.
      * - 5 = Warnings - Exceptional occurrences that are not errors.
      * - 6 = Notices - Normal but significant events.
-     * - 7 = Info - Interesting events, like user logging in, etc.
+     * - 7 = Info - Interesting events, like users logging in, etc.
      * - 8 = Debug - Detailed debug information.
      * - 9 = All Messages
      *

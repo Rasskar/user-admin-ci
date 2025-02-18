@@ -35,6 +35,11 @@ class Profile extends Model
     ];
 
     /**
+     * @var string
+     */
+    protected $returnType = 'object';
+
+    /**
      * @var bool
      */
     protected $useTimestamps = true;

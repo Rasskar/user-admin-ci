@@ -1,0 +1,9 @@
+#photoPreview {
+    width: 200px;
+    height: 200px;
+}
+
+#cropperModal .modal-body {
+    display: flex;
+    justify-content: center;
+}

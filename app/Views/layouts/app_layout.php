@@ -1,3 +1,9 @@
+<?php
+
+use App\Helpers\MenuHelper;
+
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -11,6 +17,7 @@
     <?= $this->renderSection('styles') ?>
 </head>
 <body>
+
 <div class="container-fluid">
     <div class="row">
         <!-- Боковое меню -->
@@ -19,29 +26,27 @@
             <h4 class="mini-app-name text-center">UACi</h4>
             <hr>
             <ul class="nav flex-column mt-3 nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link text-light active" href="<?= site_url('profile') ?>">
-                        <i class='bx bxs-user'></i>
-                        <span>Мой профиль</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="<?= site_url('users') ?>">
-                        <i class='bx bx-list-ul'></i>
-                        <span>Все профили</span>
-                    </a>
-                </li>
+                <?php foreach (MenuHelper::getMenuItems() as $item) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link text-light <?= (service('request')->getUri()->getPath() == $item['path']) ? 'active disabled' : '' ?>"
+                           href="<?= site_url($item['path']) ?>"
+                        >
+                            <?= $item['icon'] ?>
+                            <span><?= $item['title'] ?></span>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
 
             <div class="mini-menu">
-                <a class="nav-link text-center active" href="<?= site_url('profile') ?>">
-                    <i class='bx bxs-user'></i>
-                </a>
-                <a class="nav-link text-center" href="<?= site_url('users') ?>">
-                    <i class='bx bx-list-ul'></i>
-                </a>
+                <?php foreach (MenuHelper::getMenuItems() as $item) : ?>
+                    <a class="nav-link text-center <?= (service('request')->getUri()->getPath() == $item['path']) ? 'active disabled' : '' ?>"
+                        href="<?= site_url($item['path']) ?>"
+                    >
+                        <?= $item['icon'] ?>
+                    </a>
+                <?php endforeach; ?>
             </div>
-
             <hr>
             <a class="logout-btn text-center" href="<?= site_url('logout') ?>">
                 <i class='bx bx-log-out-circle'></i>
@@ -56,7 +61,7 @@
     </div>
 </div>
 
-<?= $this->renderSection('scripts') ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?= $this->renderSection('scripts') ?>
 </body>
 </html>

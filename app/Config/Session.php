@@ -64,7 +64,7 @@ class Session extends BaseConfig
      * Session Match IP
      * --------------------------------------------------------------------------
      *
-     * Whether to match the user's IP address when reading the session data.
+     * Whether to match the users's IP address when reading the session data.
      *
      * WARNING: If you're using the database driver, don't forget to update
      *          your session table's PRIMARY KEY when changing this setting.

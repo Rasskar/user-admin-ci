@@ -6,12 +6,12 @@ use CodeIgniter\Config\BaseConfig;
 
 class Email extends BaseConfig
 {
-    public string $fromEmail  = 'no-reply@user-admin-ci.com';
+    public string $fromEmail  = 'no-reply@users-admin-ci.com';
     public string $fromName   = 'User Admin CI';
     public string $recipients = '';
 
     /**
-     * The "user agent"
+     * The "users agent"
      */
     public string $userAgent = 'CodeIgniter';
 

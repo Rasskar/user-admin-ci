@@ -52,7 +52,7 @@ defined('DECADE') || define('DECADE', 315_360_000);
  | broad conventions.  Three such conventions are mentioned below, for
  | those who wish to make use of them.  The CodeIgniter defaults were
  | chosen for the least overlap with these conventions, while still
- | leaving room for others to be defined in future versions and user
+ | leaving room for others to be defined in future versions and users
  | applications.
  |
  | The three main conventions used for determining exit status codes
@@ -73,7 +73,7 @@ defined('EXIT_CONFIG')         || define('EXIT_CONFIG', 3);         // configura
 defined('EXIT_UNKNOWN_FILE')   || define('EXIT_UNKNOWN_FILE', 4);   // file not found
 defined('EXIT_UNKNOWN_CLASS')  || define('EXIT_UNKNOWN_CLASS', 5);  // unknown class
 defined('EXIT_UNKNOWN_METHOD') || define('EXIT_UNKNOWN_METHOD', 6); // unknown class member
-defined('EXIT_USER_INPUT')     || define('EXIT_USER_INPUT', 7);     // invalid user input
+defined('EXIT_USER_INPUT')     || define('EXIT_USER_INPUT', 7);     // invalid users input
 defined('EXIT_DATABASE')       || define('EXIT_DATABASE', 8);       // database error
 defined('EXIT__AUTO_MIN')      || define('EXIT__AUTO_MIN', 9);      // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      || define('EXIT__AUTO_MAX', 125);    // highest automatically-assigned error code
