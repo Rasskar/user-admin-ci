@@ -3,25 +3,20 @@
 namespace App\Requests\Profiles;
 
 use App\Modules\Infrastructure\Request\FormRequest;
-use CodeIgniter\Validation\Exceptions\ValidationException;
-use Config\Services;
 
 class ProfileUpdateRequest extends FormRequest
 {
     protected function rules(): array
     {
+        $userId = auth()->id();
+
         return [
-            'userName'   => ['required', 'string', 'min_length[3]', 'max_length[50]', 'is_unique[users.username]'],
-            'userRole'   => ['permit_empty', 'string'],
+            'userName'   => ['required', 'string', 'min_length[3]', 'max_length[50]', "is_unique[users.username,id,{$userId}]"],
+            'userRole'   => ['required', 'string'],
             'firstName'  => ['permit_empty', 'string', 'max_length[50]'],
             'lastName'   => ['permit_empty', 'string', 'max_length[50]'],
             'description'=> ['permit_empty', 'string'],
-            'profileImage' => [
-                'permit_empty',
-                'is_image[profileImage]',
-                'max_size[profileImage,2048]',
-                'mime_in[profileImage,image/jpeg,image/png,image/webp,image/gif,image/bmp,image/tiff]'
-            ],
+            'profileImage' => ['permit_empty'],
         ];
     }
 
@@ -48,11 +43,6 @@ class ProfileUpdateRequest extends FormRequest
             ],
             'description' => [
                 'string'      => 'Поле "Описание" должно быть строкой.',
-            ],
-            'profileImage' => [
-                'is_image'    => 'Файл должен быть изображением (JPG, PNG, WEBP, GIF, BMP, TIFF).',
-                'max_size'    => 'Размер изображения не должен превышать 2MB.',
-                'mime_in'     => 'Изображение должно быть формата JPG, PNG, WEBP, GIF, BMP или TIFF.',
             ],
         ];
     }

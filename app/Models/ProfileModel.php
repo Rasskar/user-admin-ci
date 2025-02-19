@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Entities\ProfileEntity;
 use CodeIgniter\Model;
 
-class Profile extends Model
+class ProfileModel extends Model
 {
     /**
      * @var string
@@ -37,7 +38,7 @@ class Profile extends Model
     /**
      * @var string
      */
-    protected $returnType = 'object';
+    protected $returnType = ProfileEntity::class;
 
     /**
      * @var bool

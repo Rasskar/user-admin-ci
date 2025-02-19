@@ -3,11 +3,11 @@
 /**
  * @var bool $isShow
  * @var User $userModel
- * @var Profile $profileModel
+ * @var ProfileEntity $profileModel
  */
 
-use App\Models\Profile;
-use App\Models\User;
+use App\Entities\ProfileEntity;
+use CodeIgniter\Shield\Entities\User;
 
 ?>
 
@@ -29,6 +29,12 @@ UACi | Профиль пользователя
 
 <?= $this->section('content') ?>
 <h2 class="mb-4">Профиль</h2>
+
+<?php
+echo "<pre>";
+print_r(auth()->user()->username);
+echo "</pre>";
+?>
 
 <!-- Блок уведомлений -->
 <div id="alertBox" class="alert d-none" role="alert">Ошибка</div>
@@ -70,7 +76,7 @@ UACi | Профиль пользователя
         <!-- Правая колонка с фото -->
         <div class="col-md-4 text-center">
             <div class="profile-placeholder">
-                <img id="photoPreview" src="<?= esc($profileModel->photo_link ?? '/assets/images/default-avatar.png') ?>" alt="Фото профиля" class="profile-img">
+                <img id="photoPreview" src="<?= esc($profileModel->getPhotoLink()) ?>" alt="Фото профиля" class="profile-img">
             </div>
             <?php if (!$isShow) : ?>
                 <div>

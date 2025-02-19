@@ -5,8 +5,8 @@ namespace App\Database\Seeds;
 use App\Modules\Infrastructure\Traits\TransactionTrait;
 use CodeIgniter\Database\Seeder;
 use Carbon\Carbon;
-use App\Models\User;
-use App\Models\Profile;
+use App\Models\UserModel;
+use App\Models\ProfileModel;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
 use CodeIgniter\Shield\Models\GroupModel;
 use CodeIgniter\Shield\Models\UserIdentityModel;
@@ -26,7 +26,7 @@ class AdminSeeder extends Seeder
                 return;
             }
 
-            $user = new User();
+            $user = new UserModel();
             $userId = $user->insert([
                 'username'    => env('ADMIN_USERNAME', 'admin'),
                 'last_active' => Carbon::now(),
@@ -60,7 +60,7 @@ class AdminSeeder extends Seeder
                 throw new RuntimeException('Failed to insert group-users');
             }
 
-            $profile = new Profile();
+            $profile = new ProfileModel();
             $profileAttributes = [
                 'user_id' => $userId
             ];

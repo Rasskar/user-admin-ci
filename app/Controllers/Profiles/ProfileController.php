@@ -3,12 +3,16 @@
 namespace App\Controllers\Profiles;
 
 use App\Controllers\BaseController;
-use App\Models\Profile;
-use App\Models\User;
+use App\DTO\Profiles\ProfileUpdateDto;
+use App\Models\ProfileModel;
+use App\Models\UserModel;
 use App\Requests\Profiles\ProfileUpdateRequest;
+use App\Services\Profiles\ProfileUpdateService;
+use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
-use CodeIgniter\Validation\Exceptions\ValidationException;
+use Exception;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class ProfileController extends BaseController
 {
@@ -19,15 +23,13 @@ class ProfileController extends BaseController
      */
     public function show(int $userId, string $action = 'show'): string
     {
-        $user = (new User())->find($userId);
+        $user = (new UserModel())->find($userId);
 
         if (!$user) {
             throw PageNotFoundException::forPageNotFound("Пользователь с ID $userId не найден.");
         }
 
-        $profile = (new Profile())->where(['user_id' => $userId])->first();
-
-        //dd(auth()->user()->getGroups());
+        $profile = (new ProfileModel())->where(['user_id' => $userId])->first();
 
         return view('profiles/profile', [
             'isShow' => ($action == 'show'),
@@ -49,31 +51,32 @@ class ProfileController extends BaseController
         return $this->show($userId, 'edit');
     }
 
-    public function update(ProfileUpdateRequest $request)
+    public function update()
     {
-        echo '<pre>';
-        print_r($request);
-        echo '</pre>';
+        $requestData = (new ProfileUpdateRequest($this->request))->getValidatedData();
 
-        /*try {
-
-
+        try {
+            $dto = new ProfileUpdateDto(...$requestData);
+            (new ProfileUpdateService($dto))->updateProfile(auth()->id());
 
             return $this->response->setStatusCode(200)->setJSON([
-                'message' => 'Профиль успешно обновлен!',
+                'message' => 'Профиль обновлен',
                 'csrf_token' => csrf_hash()
             ]);
-        } catch (ValidationException $exception) {
-            return $this->response->setStatusCode(422)->setJSON([
-                    'message' => $exception->getMessage(),
-                    'errors' => $exception->getMessage(),
-                    'csrf_token' => csrf_hash()
+        } catch (NotFoundResourceException $exception) {
+            return $this->response->setStatusCode(404)->setJSON([
+                'message' => $exception->getMessage(),
+                'csrf_token' => csrf_hash()
             ]);
-        } catch (\Exception $exception) {
+        } catch (DataException $exception) {
             return $this->response->setStatusCode(500)->setJSON([
-                    'message' => 'Произошла внутренняя ошибка сервера.',
-                    'error' => $exception->getMessage()
+                'message' => $exception->getMessage(),
+                'csrf_token' => csrf_hash()
             ]);
-        }*/
+        } catch (Exception $exception) {
+            return $this->response->setStatusCode(500)->setJSON([
+                'message' => $exception->getMessage()//'Ошибка сервера. Перезагрузите страницу и попробуйте снова.'
+            ]);
+        }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\Profile;
-use App\Models\User;
+use App\Models\ProfileModel;
+use App\Models\UserModel;
 use Carbon\Carbon;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
 use CodeIgniter\Shield\Entities\Group;

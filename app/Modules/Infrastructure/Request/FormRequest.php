@@ -27,21 +27,20 @@ abstract class FormRequest
     /**
      * @return array
      */
+    public function getValidatedData(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * @return array
+     */
     abstract protected function rules(): array;
 
     /**
      * @return array
      */
     abstract protected function messages(): array;
-
-
-    /**
-     * @return array
-     */
-    public function getValidatedData(): array
-    {
-        return $this->data;
-    }
 
     /**
      * @return void
