@@ -28,13 +28,11 @@ class ProfileEntity extends Entity
     /**
      * @return string
      */
-    public function getPhotoLink(): string
+    public function getPhoto(): string
     {
-        dd($this->photo_link);
-
-        /*if (!empty($this->photo_link)) {
-            return base_url('file/' . $this->photo_link);
-        }*/
+        if (!empty($this->attributes['photo_link'])) {
+            return base_url('file/' . $this->attributes['photo_link']);
+        }
 
         return base_url('/assets/images/default-avatar.png');
     }
