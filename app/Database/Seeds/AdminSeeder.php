@@ -31,7 +31,7 @@ class AdminSeeder extends Seeder
                 'username'    => env('ADMIN_USERNAME', 'admin'),
                 'last_active' => Carbon::now(),
                 'active'      => 1,
-            ]);
+            ], true);
 
             if (!$userId) {
                 throw new RuntimeException('Failed to insert users');
@@ -58,15 +58,6 @@ class AdminSeeder extends Seeder
 
             if (!$groupUser->insert($groupUserAttributes)) {
                 throw new RuntimeException('Failed to insert group-users');
-            }
-
-            $profile = new ProfileModel();
-            $profileAttributes = [
-                'user_id' => $userId
-            ];
-
-            if (!$profile->insert($profileAttributes)) {
-                throw new RuntimeException('Failed to insert profile');
             }
 
             $db->transCommit();

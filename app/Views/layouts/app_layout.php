@@ -19,14 +19,14 @@ use App\Helpers\MenuHelper;
 <body>
 
 <div class="container-fluid">
-    <div class="row">
-        <!-- Боковое меню -->
-        <nav class="col-md-2 bg-dark text-light vh-100 d-flex flex-column p-3 sidebar">
-            <h4 class="app-name text-center">UserAdminCi</h4>
-            <h4 class="mini-app-name text-center">UACi</h4>
-            <hr>
-            <ul class="nav flex-column mt-3 nav-pills">
-                <?php foreach (MenuHelper::getMenuItems() as $item) : ?>
+    <!-- Боковое меню -->
+    <nav class="col-md-2 bg-dark text-light vh-100 d-flex flex-column p-3 sidebar">
+        <h4 class="app-name text-center">UserAdmin</h4>
+        <h4 class="mini-app-name text-center">UA</h4>
+        <hr>
+        <ul class="nav flex-column mt-3 nav-pills">
+            <?php foreach (MenuHelper::getMenuItems() as $item) : ?>
+                <?php if (!isset($item['roles']) || auth()->user()->inGroup(...$item['roles'])) : ?>
                     <li class="nav-item">
                         <a class="nav-link text-light <?= (service('request')->getUri()->getPath() == $item['path']) ? 'active disabled' : '' ?>"
                            href="<?= site_url($item['path']) ?>"
@@ -35,30 +35,30 @@ use App\Helpers\MenuHelper;
                             <span><?= $item['title'] ?></span>
                         </a>
                     </li>
-                <?php endforeach; ?>
-            </ul>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
 
-            <div class="mini-menu">
-                <?php foreach (MenuHelper::getMenuItems() as $item) : ?>
-                    <a class="nav-link text-center <?= (service('request')->getUri()->getPath() == $item['path']) ? 'active disabled' : '' ?>"
-                        href="<?= site_url($item['path']) ?>"
-                    >
-                        <?= $item['icon'] ?>
-                    </a>
-                <?php endforeach; ?>
-            </div>
-            <hr>
-            <a class="logout-btn text-center" href="<?= site_url('logout') ?>">
-                <i class='bx bx-log-out-circle'></i>
-                <span>Выйти<span>
-            </a>
-        </nav>
+        <div class="mini-menu">
+            <?php foreach (MenuHelper::getMenuItems() as $item) : ?>
+                <a class="nav-link text-center <?= (service('request')->getUri()->getPath() == $item['path']) ? 'active disabled' : '' ?>"
+                    href="<?= site_url($item['path']) ?>"
+                >
+                    <?= $item['icon'] ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+        <hr>
+        <a class="logout-btn text-center" href="<?= site_url('logout') ?>">
+            <i class='bx bx-log-out-circle'></i>
+            <span>Выйти<span>
+        </a>
+    </nav>
 
-        <!-- Основной контент -->
-        <main class="col-md-10 p-4">
-            <?= $this->renderSection('content') ?>
-        </main>
-    </div>
+    <!-- Основной контент -->
+    <main>
+        <?= $this->renderSection('content') ?>
+    </main>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

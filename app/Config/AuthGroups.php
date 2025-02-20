@@ -23,7 +23,7 @@ class AuthGroups extends ShieldAuthGroups
      * --------------------------------------------------------------------
      * The group that a newly registered users is added to.
      */
-    public string $defaultGroup = 'users';
+    public string $defaultGroup = 'user';
 
     /**
      * --------------------------------------------------------------------
@@ -45,7 +45,7 @@ class AuthGroups extends ShieldAuthGroups
             'title'       => 'Администратор',
             'description' => 'Полный доступ ко всем функциям системы.',
         ],
-        'users' => [
+        'user' => [
             'title'       => 'Пользователь',
             'description' => 'Обычный пользователь без дополнительных прав.',
         ],
@@ -71,6 +71,6 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $matrix = [
         'admin' => ['*'],
-        'users' => [],
+        'user' => [],
     ];
 }

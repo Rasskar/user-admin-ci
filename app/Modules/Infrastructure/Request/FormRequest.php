@@ -15,6 +15,11 @@ abstract class FormRequest
     protected array $data = [];
 
     /**
+     * @var array
+     */
+    protected array $errors = [];
+
+    /**
      * @param RequestInterface $request
      */
     public function __construct(
@@ -27,9 +32,25 @@ abstract class FormRequest
     /**
      * @return array
      */
-    public function getValidatedData(): array
+    public function getData(): array
     {
         return $this->data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return empty($this->errors);
     }
 
     /**
@@ -49,17 +70,12 @@ abstract class FormRequest
     {
         $validation = Services::validation();
         $validation->setRules($this->rules(), $this->messages());
+
         $requestData = array_merge($this->request->getPost(), $this->request->getGet(), $this->request->getFiles());
 
         if (!$validation->run($requestData)) {
-            $response = Services::response()->setStatusCode(422)->setJSON([
-                'message' => 'Ошибка валидации',
-                'errors' => $validation->getErrors(),
-                'csrf_token' => csrf_hash()
-            ]);
-
-            $response->send();
-            exit;
+            $this->errors = $validation->getErrors();
+            return;
         }
 
         $this->data = $validation->getValidated();

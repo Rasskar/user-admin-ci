@@ -1,0 +1,35 @@
+#searchForm .row {
+    display: flex;
+    align-items: center;
+}
+
+#searchForm .row input {
+    width: 300px;
+}
+
+#searchForm .row button {
+    width: 100px;
+    margin-left: 15px;
+}
+
+.users-list nav {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 425px) {
+    #searchForm .row {
+        flex-direction: column;
+    }
+
+    #searchForm .row button {
+        width: 100px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .users-list .table .email,
+    .users-list .table .status {
+        display: none;
+    }
+}

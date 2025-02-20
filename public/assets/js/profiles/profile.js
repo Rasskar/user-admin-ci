@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    document.getElementById("profileForm").addEventListener('submit', async function(event) {
+    /*document.getElementById("profileForm").addEventListener('submit', async function(event) {
         event.preventDefault();
 
         const form = event.target;
@@ -72,10 +72,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const result = await response.json();
 
-            console.log(result);
-
-            /*// Обновляем CSRF-токен
             document.getElementById('csrf_token').value = result.csrf_token;
+            //document.querySelector('input[name="<?= csrf_token() ?>"]').value = result.csrf_token;
+
+
+            console.log(result);
+            console.log(response);
+
+
+            /!*!// Обновляем CSRF-токен
+
 
             const alertBox = document.getElementById("alertBox");
             alertBox.classList.remove("d-none");
@@ -105,15 +111,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     });
                 }
-            }*/
+            }*!/
         } catch (error) {
             console.error("Ошибка запроса:", error);
-            /*alertBox.classList.remove("alert-success");
+            /!*alertBox.classList.remove("alert-success");
             alertBox.classList.add("alert-danger");
-            alertBox.textContent = "Ошибка соединения с сервером.";*/
+            alertBox.textContent = "Ошибка соединения с сервером.";*!/
         } finally {
             submitButton.innerHTML = "Сохранить";
             submitButton.disabled = false;
         }
-    });
+    });*/
 });

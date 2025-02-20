@@ -11,14 +11,20 @@ class MenuHelper
     {
         return [
             [
+                'title' => 'Dashboard',
+                'path' => '/',
+                'icon' => "<i class='bx bxs-dashboard' ></i>",
+            ],
+            [
                 'title' => 'Мой профиль',
-                'path' => '/profile/edit/' . auth()->id(),
-                'icon' => "<i class='bx bxs-user'></i>"
+                'path' => '/profile/' . auth()->id(),
+                'icon' => "<i class='bx bxs-user'></i>",
             ],
             [
                 'title' => 'Все профили',
                 'path' => '/profiles',
-                'icon' => "<i class='bx bx-list-ul'></i>"
+                'icon' => "<i class='bx bx-list-ul'></i>",
+                'roles' => ['admin']
             ],
         ];
     }

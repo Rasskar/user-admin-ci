@@ -7,3 +7,43 @@
     display: flex;
     justify-content: center;
 }
+
+.alert-danger ul {
+    margin-bottom: 0;
+}
+
+#profileForm .button-container {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profileForm .button-container .edit {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 425px) {
+    #profileForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #profileForm .row {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    #profileForm .row .col-md-4 {
+        width: auto;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    #profileForm .row .col-md-8 {
+        width: auto;
+        align-items: center;
+    }
+}
+

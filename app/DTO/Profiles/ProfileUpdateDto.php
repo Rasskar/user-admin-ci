@@ -16,6 +16,7 @@ class ProfileUpdateDto
      * @param UploadedFile|null $profileImage
      */
     public function __construct(
+        public int $userId,
         public string $userName,
         public string $userRole,
         public string|null $firstName,

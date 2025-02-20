@@ -11,6 +11,7 @@ class ProfileUpdateRequest extends FormRequest
         $userId = auth()->id();
 
         return [
+            'userId' => ['required', 'integer', 'is_not_unique[users.id]'],
             'userName'   => ['required', 'string', 'min_length[3]', 'max_length[50]', "is_unique[users.username,id,{$userId}]"],
             'userRole'   => ['required', 'string'],
             'firstName'  => ['permit_empty', 'string', 'max_length[50]'],
@@ -23,6 +24,11 @@ class ProfileUpdateRequest extends FormRequest
     protected function messages(): array
     {
         return [
+            'userId' => [
+                'required'      => 'Поле "ID пользователя" обязательно.',
+                'integer'       => 'Поле "ID пользователя" должно быть числом.',
+                'is_not_unique' => 'Такой пользователь не найден в базе данных.',
+            ],
             'userRole' => [
                 'string'  => 'Поле "Роль" должно быть строкой.',
             ],

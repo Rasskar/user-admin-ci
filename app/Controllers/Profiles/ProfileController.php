@@ -53,30 +53,21 @@ class ProfileController extends BaseController
 
     public function update()
     {
-        $requestData = (new ProfileUpdateRequest($this->request))->getValidatedData();
+        $formRequest = new ProfileUpdateRequest($this->request);
+
+        if (!$formRequest->isValid()) {
+            return redirect()->back()->withInput()->with('errors', $formRequest->getErrors());
+        }
 
         try {
-            $dto = new ProfileUpdateDto(...$requestData);
-            (new ProfileUpdateService($dto))->updateProfile(auth()->id());
+            $dto = new ProfileUpdateDto(...$formRequest->getData());
+            (new ProfileUpdateService($dto))->execute();
 
-            return $this->response->setStatusCode(200)->setJSON([
-                'message' => 'Профиль обновлен',
-                'csrf_token' => csrf_hash()
-            ]);
-        } catch (NotFoundResourceException $exception) {
-            return $this->response->setStatusCode(404)->setJSON([
-                'message' => $exception->getMessage(),
-                'csrf_token' => csrf_hash()
-            ]);
-        } catch (DataException $exception) {
-            return $this->response->setStatusCode(500)->setJSON([
-                'message' => $exception->getMessage(),
-                'csrf_token' => csrf_hash()
-            ]);
+            return redirect()->to('/profile/edit/' . $dto->userId)->with('success', 'Профиль обновлен!');
+        } catch (NotFoundResourceException|DataException $exception) {
+            return redirect()->back()->withInput()->with('error', $exception->getMessage());
         } catch (Exception $exception) {
-            return $this->response->setStatusCode(500)->setJSON([
-                'message' => $exception->getMessage()//'Ошибка сервера. Перезагрузите страницу и попробуйте снова.'
-            ]);
+            return redirect()->back()->withInput()->with('error', 'Произошла ошибка. Попробуйте снова.');
         }
     }
 }
