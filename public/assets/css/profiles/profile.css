@@ -19,7 +19,7 @@
     align-items: center;
 }
 
-#profileForm .button-container .edit {
+#profileForm .button-container a {
     margin-bottom: 5px;
 }
 
@@ -28,15 +28,17 @@
     margin-top: 16px;
 }
 
+@media (max-width: 767px) {
+    #profileForm .row {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}
+
 @media (max-width: 425px) {
     #profileForm {
         display: flex;
         flex-direction: column;
-        align-items: center;
-    }
-
-    #profileForm .row {
-        flex-direction: column-reverse;
         align-items: center;
     }
 

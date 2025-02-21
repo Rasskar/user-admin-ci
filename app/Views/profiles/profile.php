@@ -107,6 +107,8 @@ UACi | Профиль пользователя
             <?php else: ?>
                 <div class="button-container">
                     <a class="btn btn-primary edit" href="<?= base_url('/profile/edit/' . $userModel->id) ?>" role="button">Редактировать</a>
+                    <a class="btn btn-success export-excel" href="<?= base_url('/profile/export/excel/' . $userModel->id) ?>" role="button">Экспорт XLSX</a>
+                    <a class="btn btn-success export-excel" href="<?= base_url('/profile/export/word/' . $userModel->id) ?>" role="button">Экспорт DOCX</a>
                     <?php if (auth()->user()->inGroup('admin') && !$userModel->inGroup('admin')) : ?>
                         <a class="btn btn-danger delete" href="<?= base_url('profile/delete/' . $userModel->id) ?>" role="button">Удалить</a>
                     <?php endif; ?>
