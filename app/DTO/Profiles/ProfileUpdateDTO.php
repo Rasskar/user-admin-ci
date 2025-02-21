@@ -5,7 +5,7 @@ namespace App\DTO\Profiles;
 use App\Modules\Infrastructure\DTO\DTOArrayInterface;
 use CodeIgniter\HTTP\Files\UploadedFile;
 
-class ProfileUpdateDto
+class ProfileUpdateDTO
 {
     /**
      * @param string $userName

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Files;
 
+use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class FileController extends BaseController

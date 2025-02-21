@@ -2,11 +2,12 @@
 
 namespace App\Services\Profiles;
 
-use App\DTO\Profiles\ProfileUpdateDto;
+use App\DTO\Profiles\ProfileUpdateDTO;
 use App\Entities\ProfileEntity;
 use App\Models\ProfileModel;
 use App\Models\UserModel;
 use App\Models\GroupModel;
+use App\Services\Files\FileSaveService;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Shield\Entities\Group;
@@ -17,10 +18,10 @@ use Throwable;
 class ProfileUpdateService
 {
     /**
-     * @param ProfileUpdateDto $dto
+     * @param ProfileUpdateDTO $dto
      */
     public function __construct(
-        protected ProfileUpdateDto $dto
+        protected ProfileUpdateDTO $dto
     )
     {
     }
@@ -104,7 +105,11 @@ class ProfileUpdateService
             throw new NotFoundResourceException("Профиль пользователя не найден.");
         }
 
-        $this->setProfileImage($profile);
+        $filePath = (new FileSaveService($this->dto->profileImage, 'profilePhoto', $profile->user_id))->save();
+
+        if (!empty($filePath)) {
+            $profile->photo_link = $filePath;
+        }
 
         $profile->fill([
             'first_name' => $this->dto->firstName,
@@ -115,29 +120,5 @@ class ProfileUpdateService
         if(!$profileModel->update($profile->id, $profile->toArray())) {
             throw new DataException("Ошибка сохранения профиля");
         }
-    }
-
-    /**
-     * @param ProfileEntity $profile
-     * @return void
-     */
-    private function setProfileImage(ProfileEntity $profile): void
-    {
-        if (!$this->dto->profileImage instanceof UploadedFile
-            || !$this->dto->profileImage->isValid()
-            || $this->dto->profileImage->hasMoved()) {
-            return;
-        }
-
-        $uploadPath = WRITEPATH . 'uploads/profilePhoto';
-
-        if (!is_dir($uploadPath)) {
-            mkdir($uploadPath, 0777, true);
-        }
-
-        $newFileName = $profile->user_id . '_' . time() . '.' . $this->dto->profileImage->getExtension();
-        $this->dto->profileImage->move($uploadPath, $newFileName);
-
-        $profile->photo_link = 'profilePhoto/' . $newFileName;
     }
 }

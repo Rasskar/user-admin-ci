@@ -26,6 +26,12 @@ class MenuHelper
                 'icon' => "<i class='bx bx-list-ul'></i>",
                 'roles' => ['admin']
             ],
+            [
+                'title' => 'Создать профиль',
+                'path' => '/profile/add',
+                'icon' => "<i class='bx bx-plus'></i>",
+                'roles' => ['admin']
+            ]
         ];
     }
 
