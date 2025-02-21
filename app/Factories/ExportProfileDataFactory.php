@@ -9,6 +9,10 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class ExportProfileDataFactory
 {
+    /**
+     * @param string $type
+     * @return ExportInterface
+     */
     public static function create(string $type): ExportInterface
     {
         return match (strtolower($type)) {
