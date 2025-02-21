@@ -21,7 +21,7 @@ class AdminFilter implements FilterInterface
         $user = auth()->user();
 
         if (!$user || !$user->inGroup('admin')) {
-            throw new Exception("У вас нет прав для просмотра этой страницы", 403);
+            throw new Exception("Доступ запрещен", 403);
         }
     }
 

@@ -23,6 +23,11 @@
     margin-bottom: 5px;
 }
 
+
+#profileForm .control-container a {
+    margin-top: 16px;
+}
+
 @media (max-width: 425px) {
     #profileForm {
         display: flex;
@@ -43,6 +48,12 @@
 
     #profileForm .row .col-md-8 {
         width: auto;
+        align-items: center;
+    }
+
+    #profileForm .control-container {
+        display: flex;
+        flex-direction: column;
         align-items: center;
     }
 }

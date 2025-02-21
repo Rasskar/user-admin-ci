@@ -95,14 +95,19 @@ UACi | Профиль пользователя
             <?php else: ?>
                 <div class="button-container">
                     <a class="btn btn-primary edit" href="<?= base_url('/profile/edit/' . $userModel->id) ?>" role="button">Редактировать</a>
-                    <a class="btn btn-danger delete" href="" role="button">Удалить</a>
+                    <?php if (auth()->user()->inGroup('admin')) : ?>
+                        <a class="btn btn-danger delete" href="" role="button">Удалить</a>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
         </div>
     </div>
 
     <?php if (!$isShow) : ?>
+    <div class="control-container">
         <button type="submit" class="btn btn-primary mt-3 load">Сохранить</button>
+        <a class="btn btn-danger" href="<?= base_url('/profile/' . $userModel->id) ?>" role="button">Вернуться назад</a>
+    </div>
     <?php endif; ?>
 </form>
 

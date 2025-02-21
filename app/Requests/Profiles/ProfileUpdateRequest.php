@@ -8,7 +8,7 @@ class ProfileUpdateRequest extends FormRequest
 {
     protected function rules(): array
     {
-        $userId = auth()->id();
+        $userId = $this->request->getPost('userId');
 
         return [
             'userId' => ['required', 'integer', 'is_not_unique[users.id]'],

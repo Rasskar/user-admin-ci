@@ -24,6 +24,12 @@ use CodeIgniter\Shield\Entities\User;
 <?= $this->section('content') ?>
 <h2 class="mb-4">Список пользователей</h2>
 
+<?php if (session()->has('success')): ?>
+    <div class="alert alert-success">
+        <?= esc(session('success')) ?>
+    </div>
+<?php endif; ?>
+
 <form id="searchForm" method="GET" action="<?= site_url('profiles') ?>" class="mb-3">
     <div class="row">
         <input type="text" name="search" class="form-control" value="<?= esc($search ?? '') ?>" placeholder="Поиск по имени или email">

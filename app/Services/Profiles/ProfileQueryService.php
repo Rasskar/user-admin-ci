@@ -58,7 +58,8 @@ class ProfileQueryService
                           ELSE "deactivated" 
                       END AS status')
             ->join('auth_identities', 'auth_identities.user_id = users.id')
-            ->where(['users.deleted_at' => null]);
+            ->where(['users.deleted_at' => null])
+            ->orderBy('users.id', 'DESC');
 
         if (!empty($this->search)) {
             $query = $query
