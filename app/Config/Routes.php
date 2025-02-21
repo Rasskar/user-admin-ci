@@ -5,7 +5,6 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('test-email', 'Home::sendTest');
 
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Dashboard\DashboardController::index');
