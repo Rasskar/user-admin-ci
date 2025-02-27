@@ -2,72 +2,88 @@
 
 namespace App\Services\Profiles;
 
+use App\DTO\Profiles\ProfileQueryDto;
 use App\Models\UserModel;
-use CodeIgniter\Pager\Pager;
-use CodeIgniter\Shield\Entities\User;
 
 class ProfileQueryService
 {
-    /**
-     * @var User[]
-     */
-    protected array $users = [];
+    protected array $data = [];
+    protected int $totalRecords = 0;
+    protected int $filteredRecords = 0;
 
     /**
-     * @var Pager|null
-     */
-    protected  Pager|null $pager = null;
-
-    /**
-     * @param string|null $search
-     * @param int $paginate
+     * @param ProfileQueryDto $dto
      */
     public function __construct(
-        protected string|null $search,
-        protected int $paginate = 15
+        protected ProfileQueryDto $dto
     )
     {
         $this->query();
     }
 
     /**
-     * @return User[]
+     * @return array
      */
-    public function getUsers(): array
+    public function getData(): array
     {
-        return $this->users;
+        return $this->data;
     }
 
     /**
-     * @return Pager|null
+     * @return int
      */
-    public function getPager(): Pager|null
+    public function getTotalRecords(): int
     {
-        return $this->pager;
+        return $this->totalRecords;
     }
 
-    public function query(): void
+    /**
+     * @return int
+     */
+    public function getFilteredRecords(): int
+    {
+        return $this->filteredRecords;
+    }
+
+    /**
+     * @return void
+     */
+    protected function query(): void
     {
         $userModel = new UserModel();
 
-        $query = $userModel
-            ->select('users.id, users.username, auth_identities.secret AS email,
-                     CASE 
-                          WHEN users.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE) 
-                          THEN "online" 
-                          ELSE "deactivated" 
-                      END AS status')
+        $builder = $userModel->select(
+            'users.id AS id, users.username AS username, auth_identities.secret AS email,
+             CASE 
+                  WHEN users.last_active >= DATE_SUB(NOW(), INTERVAL 5 MINUTE) 
+                  THEN "online" 
+                  ELSE "offline" 
+             END AS status'
+        )
             ->join('auth_identities', 'auth_identities.user_id = users.id')
-            ->where(['users.deleted_at' => null])
-            ->orderBy('users.id', 'DESC');
+            ->where('users.deleted_at', null);
 
-        if (!empty($this->search)) {
-            $query = $query
-                ->like('users.username', $this->search)
-                ->orLike('auth_identities.secret', $this->search);
+        $this->totalRecords = $builder->countAllResults(false);
+
+        if (!empty($this->dto->search)) {
+            $builder->groupStart()
+                ->like('users.username', $this->dto->search)
+                ->orLike('auth_identities.secret', $this->dto->search)
+                ->groupEnd();
         }
 
-        $this->users = $query->paginate($this->paginate);
-        $this->pager = $userModel->pager;
+        $this->filteredRecords = $builder->countAllResults(false);
+
+        if (!empty($this->dto->order)) {
+            foreach ($this->dto->order as $order) {
+                $builder->orderBy($this->dto->columns[$order['column']]['data'], $order['dir']);
+            }
+        } else {
+            $builder->orderBy('id', 'DESC');
+        }
+
+        $builder->limit($this->dto->limit, $this->dto->offset);
+
+        $this->data = $builder->get()->getResultArray();
     }
 }

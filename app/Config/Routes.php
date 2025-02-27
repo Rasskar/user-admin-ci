@@ -9,6 +9,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Dashboard\DashboardController::index');
     $routes->get('/profiles', 'Profiles\ProfilesController::index', ['filter' => 'admin']);
+    $routes->get('/profiles/datatable', 'Profiles\ProfilesController::datatable', ['filter' => 'admin']);
     $routes->get('/profile/(:num)', 'Profiles\ProfileController::show/$1', ['filter' => 'profile']);
     $routes->get('/profile/edit/(:num)', 'Profiles\ProfileController::edit/$1', ['filter' => 'profile']);
     $routes->get('/profile/add', 'Profiles\ProfileController::add', ['filter' => 'admin']);

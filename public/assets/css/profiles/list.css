@@ -1,35 +1,46 @@
-#searchForm .row {
+#usersTable_wrapper .table-head-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#usersTable_wrapper .table-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#usersTable {
+    min-width: 600px;
+}
+
+#usersTable_wrapper .table-head-container .search-container label {
     display: flex;
     align-items: center;
 }
 
-#searchForm .row input {
-    width: 300px;
+#usersTable_wrapper .table-head-container .search-container i {
+    font-size: 20px;
 }
 
-#searchForm .row button {
-    width: 100px;
-    margin-left: 15px;
-}
-
-.users-list nav {
+#usersTable_wrapper .pagination-container {
     display: flex;
     justify-content: center;
 }
 
-@media (max-width: 425px) {
-    #searchForm .row {
-        flex-direction: column;
+@media (max-width: 600px) {
+    #usersTable_wrapper .table-container {
+        overflow-x: auto;
     }
+}
 
-    #searchForm .row button {
+@media (max-width: 465px) {
+    #usersTable_wrapper .table-head-container .search-container input {
+        width: 150px;
+    }
+}
+
+@media (max-width: 375px) {
+    #usersTable_wrapper .table-head-container .search-container input {
         width: 100px;
-        margin-left: 0;
-        margin-top: 10px;
-    }
-
-    .users-list .table .email,
-    .users-list .table .status {
-        display: none;
     }
 }

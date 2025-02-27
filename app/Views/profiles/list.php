@@ -18,7 +18,14 @@ use CodeIgniter\Shield\Entities\User;
 <?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
 <link href="<?= base_url('assets/css/profiles/list.css?v=' . time()) ?>" rel="stylesheet">
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script src="<?= base_url('assets/js/profiles/list.js?v=' . time()) ?>"></script>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -30,38 +37,15 @@ use CodeIgniter\Shield\Entities\User;
     </div>
 <?php endif; ?>
 
-<form id="searchForm" method="GET" action="<?= site_url('profiles') ?>" class="mb-3">
-    <div class="row">
-        <input type="text" name="search" class="form-control" value="<?= esc($search ?? '') ?>" placeholder="Поиск по имени или email">
-        <button type="submit" class="btn btn-primary">Поиск</button>
-    </div>
-</form>
 
-<div class="row users-list">
-    <table class="table">
-        <thead class="table-black">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name User</th>
-                <th class="email" scope="col">Email</th>
-                <th class="status" scope="col">Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($users as $user) : ?>
-                <tr class="<?= $user->status ?>">
-                    <th scope="row"><?= $user->id ?></th>
-                    <td>
-                        <a href="<?= site_url('profile/' . $user->id) ?>">
-                            <?= $user->username ?>
-                        </a>
-                    </td>
-                    <td class="email"><?= $user->email ?></td>
-                    <td class="status"><?= $user->status ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <?= $pager->links('default', 'pagination_custom') ?>
-</div>
+<table id="usersTable" class="table table-striped table-bordered">
+    <thead class="table-black">
+        <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+</table>
 <?= $this->endSection() ?>
