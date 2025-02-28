@@ -73,7 +73,7 @@ class ProfileCreateService
         ]);
 
         if (!$this->userId) {
-            throw new DatabaseException('Ошибка создания пользователя.');
+            throw new DatabaseException('Error creating user.');
         }
     }
 
@@ -93,7 +93,7 @@ class ProfileCreateService
         ];
 
         if (!$userIdentity->insert($attributes)) {
-            throw new DatabaseException('Ошибка создания идентификации пользователя');
+            throw new DatabaseException('Error creating user identity');
         }
     }
 
@@ -110,7 +110,7 @@ class ProfileCreateService
         ];
 
         if (!$groupUser->insert($attributes)) {
-            throw new DatabaseException('Ошибка создания группы пользователя');
+            throw new DatabaseException('Error creating user group');
         }
     }
 
@@ -136,7 +136,7 @@ class ProfileCreateService
         ]);
 
         if (!$profileModel->update($profile->id, $profile->toArray())) {
-            throw new DatabaseException("Ошибка создания профиля");
+            throw new DatabaseException("Error creating profile");
         }
     }
 }

@@ -51,7 +51,7 @@ use App\Helpers\MenuHelper;
         <hr>
         <a class="logout-btn text-center" href="<?= site_url('logout') ?>">
             <i class='bx bx-log-out-circle'></i>
-            <span>Выйти<span>
+            <span><?= lang('Navigation.logout') ?><span>
         </a>
     </nav>
 

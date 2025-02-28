@@ -40,7 +40,7 @@ class UsersSeeder extends Seeder
                 ]);
 
                 if (!$userId) {
-                    throw new RuntimeException("Ошибка создания пользователя - {$createdUsers}");
+                    throw new RuntimeException("Error creating user - {$createdUsers}");
                 }
 
                 $identityModelId = $identityModel->insert([
@@ -51,7 +51,7 @@ class UsersSeeder extends Seeder
                 ]);
 
                 if (!$identityModelId) {
-                    throw new RuntimeException("Ошибка создания идентификации пользователя - {$createdUsers}");
+                    throw new RuntimeException("Error creating user identity - {$createdUsers}");
                 }
 
                 $groupModelId = $groupModel->insert([
@@ -60,7 +60,7 @@ class UsersSeeder extends Seeder
                 ]);
 
                 if (!$groupModelId) {
-                    throw new RuntimeException("Ошибка создания группы пользователя - {$createdUsers}");
+                    throw new RuntimeException("Error creating user group - {$createdUsers}");
                 }
 
                 $profile = $profileModel->where('user_id', $userId)->first();
@@ -72,21 +72,21 @@ class UsersSeeder extends Seeder
                 ]);
 
                 if (!$profileModel->update($profile->id, $profile->toArray())) {
-                    throw new RuntimeException("Ошибка при вставке профиля для пользователя - {$createdUsers}");
+                    throw new RuntimeException("Error when inserting profile for user - {$createdUsers}");
                 }
 
                 $createdUsers++;
 
                 if ($createdUsers % 10 == 0) {
-                    echo "Создано {$createdUsers} пользователей...\n";
+                    echo "Created {$createdUsers} users...\n";
                 }
             }
 
             $db->transCommit();
-            echo "Успешно создано 50 тестовых пользователей!\n";
+            echo "50 test users successfully created!\n";
         } catch (Throwable $e) {
             $db->transRollback();
-            echo "Ошибка UsersSeeder: " . $e->getMessage() . "\n";
+            echo "Error UsersSeeder: " . $e->getMessage() . "\n";
         }
     }
 }

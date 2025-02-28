@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     let cropper;
+    let errorMessages = [];
+
     const imageInput = document.getElementById("photoLink");
     const photoPreview = document.getElementById("photoPreview");
     const cropModal = new bootstrap.Modal(document.getElementById("cropperModal"));
     const cropSave = document.getElementById("cropSave");
+    const form = document.getElementById("profileForm");
 
     imageInput.addEventListener("change", function (event) {
         const file = event.target.files[0];
@@ -47,79 +50,102 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    /*document.getElementById("profileForm").addEventListener('submit', async function(event) {
-        event.preventDefault();
+    form.addEventListener("submit", function (event) {
+        const emailInput = document.getElementById("userEmail");
+        const passwordInput = document.getElementById("userPassword");
+        const usernameInput = document.getElementById("userName");
+        const firstNameInput = document.getElementById("firstName");
+        const lastNameInput = document.getElementById("lastName");
+        const fileInput = document.getElementById("photoLink");
 
-        const form = event.target;
-        const submitButton = form.querySelector('button[type="submit"]');
-        const formData = new FormData(form);
+        errorMessages = [];
+        document.querySelector(".alert-container").innerHTML = '';
+        document.querySelectorAll(".is-invalid").forEach(el => el.classList.remove("is-invalid"));
 
-        console.log(submitButton);
-        console.log(form);
-        console.log(formData);
+        validationEmail(emailInput);
+        validationUsername(usernameInput);
+        validationPassword(passwordInput);
+        validationLastAndFirstName(firstNameInput, lastNameInput);
+        validationFile(fileInput);
 
-        submitButton.innerHTML = `<span class="spinner-border spinner-border-sm"></span> Сохранение...`;
-        submitButton.disabled = true;
-
-        try {
-            const response = await fetch('/profile/update', {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                },
-                body: formData
-            });
-
-            const result = await response.json();
-
-            document.getElementById('csrf_token').value = result.csrf_token;
-            //document.querySelector('input[name="<?= csrf_token() ?>"]').value = result.csrf_token;
-
-
-            console.log(result);
-            console.log(response);
-
-
-            /!*!// Обновляем CSRF-токен
-
-
-            const alertBox = document.getElementById("alertBox");
-            alertBox.classList.remove("d-none");
-
-            if (response.ok) {
-                alertBox.classList.remove("alert-danger");
-                alertBox.classList.add("alert-success");
-                alertBox.textContent = result.message;
-
-                // Очищаем ошибки
-                document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-                document.querySelectorAll('.invalid-feedback').forEach(el => el.textContent = '');
-
-                // Скрываем сообщение через 15 сек.
-                setTimeout(() => alertBox.classList.add("d-none"), 15000);
-            } else {
-                alertBox.classList.remove("alert-success");
-                alertBox.classList.add("alert-danger");
-                alertBox.textContent = "Ошибка при сохранении данных.";
-
-                if (result.errors) {
-                    Object.keys(result.errors).forEach(field => {
-                        const input = document.getElementById(field);
-                        if (input) {
-                            input.classList.add("is-invalid");
-                            document.getElementById(field + "Error").textContent = result.errors[field];
-                        }
-                    });
-                }
-            }*!/
-        } catch (error) {
-            console.error("Ошибка запроса:", error);
-            /!*alertBox.classList.remove("alert-success");
-            alertBox.classList.add("alert-danger");
-            alertBox.textContent = "Ошибка соединения с сервером.";*!/
-        } finally {
-            submitButton.innerHTML = "Сохранить";
-            submitButton.disabled = false;
+        if (errorMessages.length > 0) {
+            event.preventDefault();
+            displayErrorMessages(errorMessages);
         }
-    });*/
+    });
+
+    function validationEmail(emailInput) {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (emailInput && emailInput.value.trim() === "") {
+            emailInput.classList.add("is-invalid");
+            errorMessages.push("Email is required");
+        } else if (emailInput && !regex.test(emailInput.value)) {
+            emailInput.classList.add("is-invalid");
+            errorMessages.push("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
+        }
+    }
+
+    function validationPassword(passwordInput) {
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+
+        if (passwordInput && passwordInput.value.length < 8) {
+            passwordInput.classList.add("is-invalid");
+            errorMessages.push("Password must be at least 8 characters.");
+        } else if (passwordInput && !regex.test(passwordInput.value)) {
+            passwordInput.classList.add("is-invalid");
+            errorMessages.push("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character.");
+        }
+    }
+
+    function validationUsername(usernameInput) {
+        const usernameLength = usernameInput.value.trim().length;
+
+        if (usernameLength < 3) {
+            usernameInput.classList.add("is-invalid");
+            errorMessages.push("Username must be at least 3 characters long.");
+        } else if (usernameLength > 50) {
+            usernameInput.classList.add("is-invalid");
+            errorMessages.push("Username cannot exceed 50 characters.");
+        }
+    }
+
+    function validationLastAndFirstName(firstNameInput, lastNameInput) {
+        if (firstNameInput && firstNameInput.value.length > 50) {
+            firstNameInput.classList.add("is-invalid");
+            errorMessages.push("First name cannot exceed 50 characters.");
+        }
+
+        if (lastNameInput && lastNameInput.value.length > 50) {
+            lastNameInput.classList.add("is-invalid");
+            errorMessages.push("Last name cannot exceed 50 characters.");
+        }
+    }
+
+    function validationFile(fileInput) {
+        if (fileInput && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+            if (!allowedTypes.includes(file.type)) {
+                errorMessages.push(fileInput, "Only JPEG, PNG, and GIF images are allowed.");
+            }
+        }
+    }
+
+    function displayErrorMessages(errors) {
+        let alertContainer = document.querySelector(".alert-container");
+
+        let errorHtml = "";
+        if (errors.length > 0) {
+            errorHtml += `
+                <div class="alert alert-danger">
+                    <ul>
+                        ${errors.map(error => `<li>${error}</li>`).join("")}
+                    </ul>
+                </div>
+            `;
+        }
+
+        alertContainer.innerHTML = errorHtml;
+    }
 });

@@ -17,7 +17,7 @@ class FileController extends BaseController
         $fullPath = WRITEPATH . 'uploads/' . $folder . '/' . $fileName;
 
         if (!is_file($fullPath)) {
-            return $this->response->setStatusCode(404)->setBody('Файл не найден');
+            return $this->response->setStatusCode(404)->setBody('Fail not found');
         }
 
         return $this->response

@@ -4,9 +4,7 @@ namespace App\Controllers\Profiles;
 
 use App\Controllers\BaseController;
 use App\DTO\Profiles\ProfileQueryDto;
-use App\Models\UserModel;
 use App\Services\Profiles\ProfileQueryService;
-use App\Services\Profiles\ProfileQueryServiceTwo;
 use CodeIgniter\HTTP\ResponseInterface;
 use Exception;
 
@@ -26,8 +24,6 @@ class ProfilesController extends BaseController
     public function datatable(): ResponseInterface
     {
         try {
-            throw new Exception("Тестовая ошибка");
-
             $requestData = $this->request->getGet();
 
             $dto = new ProfileQueryDto(

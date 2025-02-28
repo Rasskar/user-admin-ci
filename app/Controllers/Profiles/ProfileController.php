@@ -25,7 +25,7 @@ class ProfileController extends BaseController
         $user = (new UserModel())->find($userId);
 
         if (!$user) {
-            throw PageNotFoundException::forPageNotFound("Пользователь с ID $userId не найден.");
+            throw PageNotFoundException::forPageNotFound("User with ID $userId not found.");
         }
 
         $profile = (new ProfileModel())->where(['user_id' => $userId])->first();

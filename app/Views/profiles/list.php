@@ -1,20 +1,7 @@
-<?php
-
-/**
- * @var User[] $users
- * @var Pager|null $pager
- * @var string $search
- */
-
-use CodeIgniter\Pager\Pager;
-use CodeIgniter\Shield\Entities\User;
-
-?>
-
 <?= $this->extend('layouts/app_layout') ?>
 
 <?= $this->section('title') ?>
-    UACi | Все профили
+    UACi | <?= lang('Titles.profiles') ?>
 <?= $this->endSection() ?>
 
 <?= $this->section('styles') ?>
@@ -29,14 +16,15 @@ use CodeIgniter\Shield\Entities\User;
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<h2 class="mb-4">Список пользователей</h2>
+<h2 class="mb-4"><?= lang('Titles.profiles') ?></h2>
 
-<?php if (session()->has('success')): ?>
-    <div class="alert alert-success">
-        <?= esc(session('success')) ?>
-    </div>
-<?php endif; ?>
-
+<div class="alert-container">
+    <?php if (session()->has('success')): ?>
+        <div class="alert alert-success">
+            <?= esc(session('success')) ?>
+        </div>
+    <?php endif; ?>
+</div>
 
 <table id="usersTable" class="table table-striped table-bordered">
     <thead class="table-black">

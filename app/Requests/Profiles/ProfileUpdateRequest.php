@@ -24,32 +24,12 @@ class ProfileUpdateRequest extends FormRequest
     protected function messages(): array
     {
         return [
-            'userId' => [
-                'required'      => 'Поле "ID пользователя" обязательно.',
-                'integer'       => 'Поле "ID пользователя" должно быть числом.',
-                'is_not_unique' => 'Такой пользователь не найден в базе данных.',
-            ],
-            'userRole' => [
-                'string'  => 'Поле "Роль" должно быть строкой.',
-            ],
-            'userName' => [
-                'required'    => 'Поле "Никнейм" обязательно для заполнения.',
-                'string'      => 'Поле "Никнейм" должно быть строкой.',
-                'min_length'  => 'Поле "Никнейм" должно содержать минимум 3 символа.',
-                'max_length'  => 'Поле "Никнейм" не может содержать более 50 символов.',
-                'is_unique'   => 'Такой никнейм уже занят. Выберите другой.',
-            ],
-            'firstName' => [
-                'string'      => 'Поле "Имя" должно быть строкой.',
-                'max_length'  => 'Поле "Имя" не может содержать более 50 символов.',
-            ],
-            'lastName' => [
-                'string'      => 'Поле "Фамилия" должно быть строкой.',
-                'max_length'  => 'Поле "Фамилия" не может содержать более 50 символов.',
-            ],
-            'description' => [
-                'string'      => 'Поле "Описание" должно быть строкой.',
-            ],
+            'userId' => lang('Validation.userId'),
+            'userRole' => lang('Validation.userRole'),
+            'userName' => lang('Validation.userName'),
+            'firstName' => lang('Validation.firstName'),
+            'lastName' => lang('Validation.lastName'),
+            'description' => lang('Validation.description'),
         ];
     }
 }

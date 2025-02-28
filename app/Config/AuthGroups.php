@@ -42,12 +42,12 @@ class AuthGroups extends ShieldAuthGroups
      */
     public array $groups = [
         'admin' => [
-            'title'       => 'Администратор',
-            'description' => 'Полный доступ ко всем функциям системы.',
+            'title'       => 'Administrator',
+            'description' => 'Full access to all system functions.',
         ],
         'user' => [
-            'title'       => 'Пользователь',
-            'description' => 'Обычный пользователь без дополнительных прав.',
+            'title'       => 'User',
+            'description' => 'Regular user without additional rights.',
         ],
     ];
 

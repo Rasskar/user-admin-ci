@@ -58,13 +58,13 @@ class ProfileUpdateService
         $user = $userModel->find($this->dto->userId);
 
         if (!$user) {
-            throw new NotFoundResourceException("Пользователь не найден");
+            throw new NotFoundResourceException("User not found.");
         }
 
         $user->username = $this->dto->userName;
 
         if (!$userModel->update($user->id, $user->toArray())) {
-            throw new DataException("Ошибка обновления информации пользователя");
+            throw new DataException("Error updating user information");
         }
     }
 
@@ -80,13 +80,13 @@ class ProfileUpdateService
         $group = $groupModel->where('user_id', $this->dto->userId)->first();
 
         if (!$group) {
-            throw new NotFoundResourceException("Группа пользователя не найдена.");
+            throw new NotFoundResourceException("User group not found.");
         }
 
         $group->group = $this->dto->userRole;
 
         if (!$groupModel->update($group->id, $group->toArray())) {
-            throw new DataException("Ошибка обновления группы пользователя");
+            throw new DataException("Error updating user group");
         }
     }
 
@@ -102,7 +102,7 @@ class ProfileUpdateService
         $profile = $profileModel->where('user_id', $this->dto->userId)->first();
 
         if (!$profile) {
-            throw new NotFoundResourceException("Профиль пользователя не найден.");
+            throw new NotFoundResourceException("User profile not found.");
         }
 
         $filePath = (new FileSaveService($this->dto->profileImage, 'profilePhoto', $profile->user_id))->save();
@@ -118,7 +118,7 @@ class ProfileUpdateService
         ]);
 
         if(!$profileModel->update($profile->id, $profile->toArray())) {
-            throw new DataException("Ошибка сохранения профиля");
+            throw new DataException("Error saving profile");
         }
     }
 }

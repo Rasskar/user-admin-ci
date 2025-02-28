@@ -14,7 +14,7 @@ class WordExportProfileDataService implements ExportInterface
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
 
-        $section->addText('Профиль пользователя', ['bold' => true, 'size' => 16], ['alignment' => 'center']);
+        $section->addText('User profile', ['bold' => true, 'size' => 16], ['alignment' => 'center']);
         $section->addTextBreak(1);
 
         $table = $section->addTable([

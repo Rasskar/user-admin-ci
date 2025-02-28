@@ -6,16 +6,14 @@ $(document).ready(function() {
             "url": "/profiles/datatable",
             "type": "GET",
             "dataSrc": function(response) {
-                console.log(response);
+                $('.alert-container').empty();
 
                 return response.data;
             },
             "error": function(xhr, error, thrown) {
-                console.log(error);
-                console.log(thrown);
-                console.log(xhr);
+                let errorObject = JSON.parse(xhr.responseText);
 
-
+                $('.alert-container').html(`<div class="alert alert-danger">${errorObject.message}</div>`);
             }
         },
         "columns": [

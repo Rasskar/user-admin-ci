@@ -22,7 +22,7 @@ class ProfileDataService
             $profile = (new ProfileModel())->where('user_id', $this->userId)->first();
 
             if (!$user || !$profile) {
-                throw new NotFoundResourceException("Ошибка получения данных");
+                throw new NotFoundResourceException("Error receiving data");
             }
 
             return [

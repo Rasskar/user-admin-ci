@@ -23,38 +23,13 @@ class ProfileCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'userEmail' => [
-                'required' => 'Поле "Email" обязательно.',
-                'valid_email' => 'Введите корректный "Email".',
-                'is_unique' => 'Такой "Eamil" уже зарегистрирован.'
-            ],
-            'userPassword' => [
-                'required' => 'Поле "Пароль" обязательно.',
-                'min_length' => '"Пароль" должен быть не менее 8 символов.',
-                'max_length' => '"Пароль" не может превышать 50 символов.',
-                'regex_match' => '"Пароль" должен содержать хотя бы одну заглавную букву, одну строчную букву, одну цифру и один спецсимвол.'
-            ],
-            'userRole' => [
-                'string'  => 'Поле "Роль" должно быть строкой.',
-            ],
-            'userName' => [
-                'required'    => 'Поле "Никнейм" обязательно для заполнения.',
-                'string'      => 'Поле "Никнейм" должно быть строкой.',
-                'min_length'  => 'Поле "Никнейм" должно содержать минимум 3 символа.',
-                'max_length'  => 'Поле "Никнейм" не может содержать более 50 символов.',
-                'is_unique'   => 'Такой никнейм уже занят. Выберите другой.',
-            ],
-            'firstName' => [
-                'string'      => 'Поле "Имя" должно быть строкой.',
-                'max_length'  => 'Поле "Имя" не может содержать более 50 символов.',
-            ],
-            'lastName' => [
-                'string'      => 'Поле "Фамилия" должно быть строкой.',
-                'max_length'  => 'Поле "Фамилия" не может содержать более 50 символов.',
-            ],
-            'description' => [
-                'string'      => 'Поле "Описание" должно быть строкой.',
-            ],
+            'userEmail' => lang('Validation.userEmail'),
+            'userPassword' => lang('Validation.userPassword'),
+            'userRole' => lang('Validation.userRole'),
+            'userName' => lang('Validation.userName'),
+            'firstName' => lang('Validation.firstName'),
+            'lastName' => lang('Validation.lastName'),
+            'description' => lang('Validation.description'),
         ];
     }
 }

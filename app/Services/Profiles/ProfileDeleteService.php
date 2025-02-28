@@ -37,7 +37,7 @@ class ProfileDeleteService
             $groupModel = new GroupModel();
 
             if (!$userModel->find($this->userId)) {
-                throw new NotFoundResourceException("Пользователь не найден.");
+                throw new NotFoundResourceException("User not found.");
             }
 
             $identityModel->where('user_id', $this->userId)->delete();
