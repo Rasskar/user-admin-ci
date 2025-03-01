@@ -5,5 +5,6 @@ return [
     'profile' => 'My profile',
     'profiles' => 'All profiles',
     'create' => 'Create profile',
-    'logout' => 'Logout'
+    'logout' => 'Logout',
+    'history' => 'History',
 ];

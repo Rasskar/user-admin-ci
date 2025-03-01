@@ -31,6 +31,12 @@ class MenuHelper
                 'path' => '/profile/add',
                 'icon' => "<i class='bx bx-plus'></i>",
                 'roles' => ['admin']
+            ],
+            [
+                'title' => lang('Navigation.history'),
+                'path' => '/history',
+                'icon' => "<i class='bx bx-history'></i>",
+                'roles' => ['admin']
             ]
         ];
     }

@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Controllers\WebSocket\WebSocketController;
+use App\Services\WebSockets\WebSocketService;
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 
@@ -38,7 +38,7 @@ class SwooleStart extends BaseCommand
     {
         CLI::write('Starting the Swoole WebSocket server...', 'green');
 
-        $server = new WebSocketController();
+        $server = new WebSocketService();
         $server->start();
     }
 }
