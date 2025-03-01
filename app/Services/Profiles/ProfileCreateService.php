@@ -5,7 +5,9 @@ namespace App\Services\Profiles;
 use App\DTO\Profiles\ProfileCreateDTO;
 use App\Models\ProfileModel;
 use App\Models\UserModel;
+use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
 use App\Services\Files\FileSaveService;
+use App\Services\Logs\LogModelService;
 use Carbon\Carbon;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
@@ -20,6 +22,10 @@ class ProfileCreateService
      */
     protected int|null $userId = null;
 
+    /**
+     * @var LogModelService
+     */
+    protected LogModelService $logService;
 
     /**
      * @param ProfileCreateDTO $dto
@@ -28,6 +34,7 @@ class ProfileCreateService
         protected ProfileCreateDTO $dto
     )
     {
+        $this->logService = new LogModelService(new DatabaseLogService());
     }
 
     /**
@@ -66,15 +73,23 @@ class ProfileCreateService
     private function createUser(): void
     {
         $user = new UserModel();
-        $this->userId = $user->insert([
+        $attributes = [
             'username' => $this->dto->userName,
             'last_active' => Carbon::now(),
             'active' => 1,
-        ]);
+        ];
+        $this->userId = $user->insert($attributes);
 
         if (!$this->userId) {
             throw new DatabaseException('Error creating user.');
         }
+
+        $this->logService->logCreate(
+            auth()->id(),
+            UserModel::class,
+            $this->userId,
+            $attributes
+        );
     }
 
     /**
@@ -91,10 +106,18 @@ class ProfileCreateService
             'secret' => $this->dto->userEmail,
             'secret2' => $passwords->hash($this->dto->userPassword),
         ];
+        $userIdentityId = $userIdentity->insert($attributes);
 
-        if (!$userIdentity->insert($attributes)) {
+        if (!$userIdentityId) {
             throw new DatabaseException('Error creating user identity');
         }
+
+        $this->logService->logCreate(
+            auth()->id(),
+            UserIdentityModel::class,
+            $userIdentityId,
+            $attributes
+        );
     }
 
     /**
@@ -108,10 +131,18 @@ class ProfileCreateService
             'user_id' => $this->userId,
             'group'   => $this->dto->userRole,
         ];
+        $groupUserId = $groupUser->insert($attributes);
 
-        if (!$groupUser->insert($attributes)) {
+        if (!$groupUserId) {
             throw new DatabaseException('Error creating user group');
         }
+
+        $this->logService->logCreate(
+            auth()->id(),
+            GroupModel::class,
+            $groupUserId,
+            $attributes
+        );
     }
 
     /**
@@ -122,6 +153,7 @@ class ProfileCreateService
     {
         $profileModel = new ProfileModel();
         $profile = $profileModel->where('user_id', $this->userId)->first();
+        $oldAttribute = $profile->toArray();
 
         $filePath = (new FileSaveService($this->dto->profileImage, 'profilePhoto', $this->userId))->save();
 
@@ -138,5 +170,13 @@ class ProfileCreateService
         if (!$profileModel->update($profile->id, $profile->toArray())) {
             throw new DatabaseException("Error creating profile");
         }
+
+        $this->logService->logUpdate(
+            auth()->id(),
+            ProfileModel::class,
+            $profile->id,
+            $oldAttribute,
+            $profile->toArray()
+        );
     }
 }

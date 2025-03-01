@@ -3,11 +3,18 @@
 namespace App\Services\Profiles;
 
 use App\Models\UserModel;
+use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
+use App\Services\Logs\LogModelService;
 use Exception;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class ProfileToggleStatusService
 {
+    /**
+     * @var LogModelService
+     */
+    protected LogModelService $logService;
+
     /**
      * @param int $userId
      */
@@ -15,6 +22,7 @@ class ProfileToggleStatusService
         protected int $userId
     )
     {
+        $this->logService = new LogModelService(new DatabaseLogService());
     }
 
     /**
@@ -31,8 +39,17 @@ class ProfileToggleStatusService
                 throw new NotFoundResourceException("User not found.");
             }
 
-            $user->active = !$user->active;
-            $userModel->save($user);
+            $oldAttributes = $user->toArray();
+            $newAttributes = ['active' => !$user->active];
+            $userModel->update($user->id, $newAttributes);
+
+            $this->logService->logUpdate(
+                auth()->id(),
+                UserModel::class,
+                $user->id,
+                $oldAttributes,
+                $newAttributes
+            );
         } catch (Exception $exception) {
             throw $exception;
         }

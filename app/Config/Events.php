@@ -2,9 +2,12 @@
 
 namespace Config;
 
+use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
+use App\Services\Logs\LogAuthService;
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
 use CodeIgniter\HotReloader\HotReloader;
+use CodeIgniter\Shield\Entities\User;
 
 /*
  * --------------------------------------------------------------------
@@ -52,4 +55,8 @@ Events::on('pre_system', static function (): void {
             });
         }
     }
+});
+
+Events::on('login', function (User $user) {
+    (new LogAuthService(new DatabaseLogService()))->logAuth($user->id);
 });

@@ -7,7 +7,9 @@ use App\Entities\ProfileEntity;
 use App\Models\ProfileModel;
 use App\Models\UserModel;
 use App\Models\GroupModel;
+use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
 use App\Services\Files\FileSaveService;
+use App\Services\Logs\LogModelService;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Shield\Entities\Group;
@@ -18,12 +20,18 @@ use Throwable;
 class ProfileUpdateService
 {
     /**
+     * @var LogModelService
+     */
+    protected LogModelService $logService;
+
+    /**
      * @param ProfileUpdateDTO $dto
      */
     public function __construct(
         protected ProfileUpdateDTO $dto
     )
     {
+        $this->logService = new LogModelService(new DatabaseLogService());
     }
 
     /**
@@ -61,10 +69,17 @@ class ProfileUpdateService
             throw new NotFoundResourceException("User not found.");
         }
 
-        $user->username = $this->dto->userName;
+        $oldAttributes = $user->toArray();
+        $newAttributes = ['username' => $this->dto->userName];
 
-        if (!$userModel->update($user->id, $user->toArray())) {
-            throw new DataException("Error updating user information");
+        $changedData = array_diff_assoc($newAttributes, $oldAttributes);
+
+        if (!empty($changedData)) {
+            if (!$userModel->update($user->id, $changedData)) {
+                throw new DataException("Error updating user information");
+            }
+
+            $this->logService->logUpdate(auth()->id(), UserModel::class, $user->id, $oldAttributes, $changedData);
         }
     }
 
@@ -83,10 +98,17 @@ class ProfileUpdateService
             throw new NotFoundResourceException("User group not found.");
         }
 
-        $group->group = $this->dto->userRole;
+        $oldAttributes = $group->toArray();
+        $newAttributes = ['group' => $this->dto->userRole];
 
-        if (!$groupModel->update($group->id, $group->toArray())) {
-            throw new DataException("Error updating user group");
+        $changedData = array_diff_assoc($newAttributes, $oldAttributes);
+
+        if (!empty($changedData)) {
+            if (!$groupModel->update($group->id, $changedData)) {
+                throw new DataException("Error updating user group");
+            }
+
+            $this->logService->logUpdate(auth()->id(), GroupModel::class, $group->id, $oldAttributes, $changedData);
         }
     }
 
@@ -105,20 +127,27 @@ class ProfileUpdateService
             throw new NotFoundResourceException("User profile not found.");
         }
 
+        $oldAttributes = $profile->toArray();
+        $newAttributes = [
+            'first_name'  => $this->dto->firstName,
+            'last_name'   => $this->dto->lastName,
+            'description' => $this->dto->description,
+        ];
+
         $filePath = (new FileSaveService($this->dto->profileImage, 'profilePhoto', $profile->user_id))->save();
 
         if (!empty($filePath)) {
-            $profile->photo_link = $filePath;
+            $newAttributes['photo_link'] = $filePath;
         }
 
-        $profile->fill([
-            'first_name' => $this->dto->firstName,
-            'last_name' => $this->dto->lastName,
-            'description' => $this->dto->description,
-        ]);
+        $changedData = array_diff_assoc($newAttributes, $oldAttributes);
 
-        if(!$profileModel->update($profile->id, $profile->toArray())) {
-            throw new DataException("Error saving profile");
+        if (!empty($changedData)) {
+            if (!$profileModel->update($profile->id, $changedData)) {
+                throw new DataException("Error saving profile");
+            }
+
+            $this->logService->logUpdate(auth()->id(), ProfileModel::class, $profile->id, $oldAttributes, $changedData);
         }
     }
 }

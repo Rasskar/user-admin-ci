@@ -21,7 +21,7 @@ class UsersSeeder extends Seeder
     {
         $db = db_connect();
         $db->transBegin();
-        $faker = Factory::create('ru_RU');
+        $faker = Factory::create('en_EN');
 
         try {
             $userModel = new UserModel();

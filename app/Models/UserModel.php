@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
+use App\Services\Logs\LogModelService;
 use CodeIgniter\Shield\Models\UserModel as ShieldUserModel;
 
 class UserModel extends ShieldUserModel
@@ -16,11 +18,14 @@ class UserModel extends ShieldUserModel
      */
     protected function createProfile(array $data): array
     {
-        $userID = $data['id'] ?? ($data['data']['id'] ?? null);
+        $userId = $data['id'] ?? ($data['data']['id'] ?? null);
 
-        if ($userID) {
+        if ($userId) {
             $profileModel = new ProfileModel();
-            $profileModel->insert(['user_id' => $userID], true);
+            $attributes = ['user_id' => $userId];
+            $profileId = $profileModel->insert($attributes, true);
+
+            (new LogModelService(new DatabaseLogService()))->logCreate($userId, ProfileModel::class, $profileId, $attributes);
         }
 
         return $data;
