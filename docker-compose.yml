@@ -19,6 +19,24 @@ services:
     environment:
       - MAIL_HOST=mailhog
 
+  swoole:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.swoole
+    container_name: ci_swoole
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - ./docker/swoole.ini:/usr/local/etc/php/conf.d/swoole.ini
+    ports:
+      - "${SWOOLE_PORT:-9501}:${SWOOLE_PORT:-9501}"
+    networks:
+      - ci4-network
+    environment:
+      - SWOOLE_HOST=${SWOOLE_HOST:-0.0.0.0}
+      - SWOOLE_PORT=${SWOOLE_PORT:-9501}
+    command: [ "php", "spark", "swoole:start" ]
+
   nginx:
     image: nginx:latest
     container_name: ci_nginx

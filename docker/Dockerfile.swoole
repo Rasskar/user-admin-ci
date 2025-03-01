@@ -1,0 +1,24 @@
+FROM php:8.3-cli
+
+# Устанавливаем зависимости, включая libicu-dev (для intl) и другие необходимые пакеты
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libssl-dev pkg-config libbrotli-dev libicu-dev locales \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+    && pecl install swoole \
+    && docker-php-ext-enable swoole \
+    && rm -rf /var/lib/apt/lists/*
+
+# Генерируем локаль для работы с языками
+RUN locale-gen en_US.UTF-8 && update-locale
+
+# Устанавливаем Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Устанавливаем рабочую директорию
+WORKDIR /var/www/html
+
+# Копируем файлы проекта
+COPY . /var/www/html
+
+CMD ["php", "spark", "swoole:start"]
