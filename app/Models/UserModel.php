@@ -25,13 +25,7 @@ class UserModel extends ShieldUserModel
             $attributes = ['user_id' => $userId];
             $profileId = $profileModel->insert($attributes, true);
 
-
-            (new LogModelService(new DatabaseLogService()))->logCreate(
-                !empty(auth()->id()) ? auth()->id() : $userId,
-                ProfileModel::class,
-                $profileId,
-                $attributes
-            );
+            (new LogModelService(new DatabaseLogService()))->logCreate($userId, ProfileModel::class, $profileId, $attributes);
         }
 
         return $data;
