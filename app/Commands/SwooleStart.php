@@ -38,7 +38,7 @@ class SwooleStart extends BaseCommand
     {
         CLI::write('Starting the Swoole WebSocket server...', 'green');
 
-        $server = new WebSocketService();
+        $server = service('websocket');
         $server->start();
     }
 }

@@ -8,6 +8,7 @@ use App\Models\UserModel;
 use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
 use App\Services\Files\FileSaveService;
 use App\Services\Logs\LogModelService;
+use App\Services\WebSockets\WebSocketNotifierService;
 use Carbon\Carbon;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
@@ -51,6 +52,9 @@ class ProfileCreateService
             $this->createUserIdentity();
             $this->createUserGroup();
             $this->updateProfile();
+
+            WebSocketNotifierService::sendEvent('refresh', 'profiles');
+            WebSocketNotifierService::sendEvent('refresh', 'history');
 
             $db->transCommit();
         } catch (Exception $exception) {

@@ -7,6 +7,7 @@ use App\Models\UserModel;
 use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
 use App\Services\Logs\LogModelService;
 use App\Models\GroupModel;
+use App\Services\WebSockets\WebSocketNotifierService;
 use CodeIgniter\Shield\Models\UserIdentityModel;
 use Exception;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
@@ -43,6 +44,9 @@ class ProfileDeleteService
             $this->deleteRecord(GroupModel::class, 'user_id', $this->userId);
             $this->deleteRecord(ProfileModel::class, 'user_id', $this->userId);
             $this->deleteRecord(UserModel::class, 'id', $this->userId);
+
+            WebSocketNotifierService::sendEvent('refresh', 'profiles');
+            WebSocketNotifierService::sendEvent('refresh', 'history');
 
             $db->transCommit();
         } catch (Exception $exception) {

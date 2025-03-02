@@ -45,4 +45,31 @@ $(document).ready(function() {
             '<"table-container"t>' +
             '<"pagination-container"p>'
     });
+
+    let wsHost = window.location.hostname || "localhost";
+    let wsPort = 9501;
+    let socket = new WebSocket(`ws://${wsHost}:${wsPort}`);
+
+    socket.onopen = function() {
+        console.log("WebSocket connected");
+    };
+
+    socket.onmessage = function(event) {
+        let data = JSON.parse(event.data);
+
+        console.log(data);
+
+        if (data.action === "refresh" && data.channel === "profiles") {
+            console.log("Updating a table...");
+            table.ajax.reload(null, false);
+        }
+    };
+
+    socket.onclose = function() {
+        console.log("WebSocket closed");
+    };
+
+    socket.onerror = function(error) {
+        console.error("Error WebSocket: ", error);
+    };
 });

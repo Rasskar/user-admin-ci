@@ -10,6 +10,7 @@ use App\Models\GroupModel;
 use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
 use App\Services\Files\FileSaveService;
 use App\Services\Logs\LogModelService;
+use App\Services\WebSockets\WebSocketNotifierService;
 use CodeIgniter\Database\Exceptions\DataException;
 use CodeIgniter\HTTP\Files\UploadedFile;
 use CodeIgniter\Shield\Entities\Group;
@@ -47,6 +48,9 @@ class ProfileUpdateService
             $this->updateUser();
             $this->updateGroup();
             $this->updateProfile();
+
+            WebSocketNotifierService::sendEvent('refresh', 'profiles');
+            WebSocketNotifierService::sendEvent('refresh', 'history');
 
             $db->transCommit();
         } catch (Throwable $exception) {

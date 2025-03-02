@@ -90,10 +90,9 @@ class ProfileManagerController extends BaseController
         try {
             (new ProfileToggleStatusService($userId))->execute();
 
-            return redirect()->back()->with('success', 'User status changed successfully.');
+            return redirect()->to('/profile/' . $userId)->with('success', 'User status changed successfully.');
         } catch (Exception $e) {
-            session()->setFlashdata('error', );
-            return redirect()->back()->with('error', 'Error changing user status: ' . $e->getMessage());
+            return redirect()->to('/profile/' . $userId)->with('error', 'Error changing user status: ' . $e->getMessage());
         }
     }
 }

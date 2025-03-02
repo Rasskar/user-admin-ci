@@ -5,6 +5,7 @@ namespace App\Services\Profiles;
 use App\Models\UserModel;
 use App\Modules\Infrastructure\Services\Logs\DatabaseLogService;
 use App\Services\Logs\LogModelService;
+use App\Services\WebSockets\WebSocketNotifierService;
 use Exception;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
@@ -50,6 +51,9 @@ class ProfileToggleStatusService
                 $oldAttributes,
                 $newAttributes
             );
+
+            WebSocketNotifierService::sendEvent('refresh', 'profiles');
+            WebSocketNotifierService::sendEvent('refresh', 'history');
         } catch (Exception $exception) {
             throw $exception;
         }

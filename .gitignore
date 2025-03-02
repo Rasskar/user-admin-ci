@@ -124,3 +124,8 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
+
+supervisord.log
+supervisord.pid
+swoole.err.log
+swoole.out.log
