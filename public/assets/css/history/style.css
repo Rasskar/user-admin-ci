@@ -1,0 +1,36 @@
+#historyTable_wrapper .table-head-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#historyTable_wrapper .table-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+#historyTable_wrapper .table-head-container .search-container label {
+    display: flex;
+    align-items: center;
+}
+
+#historyTable_wrapper .table-head-container .search-container i {
+    font-size: 20px;
+}
+
+#historyTable_wrapper .pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 465px) {
+    #historyTable_wrapper .table-head-container .search-container input {
+        width: 150px;
+    }
+}
+
+@media (max-width: 375px) {
+    #historyTable_wrapper .table-head-container .search-container input {
+        width: 100px;
+    }
+}

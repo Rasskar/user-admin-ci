@@ -24,7 +24,7 @@ use App\Helpers\MenuHelper;
         <h4 class="app-name text-center">UserAdmin</h4>
         <h4 class="mini-app-name text-center">UA</h4>
         <hr>
-        <ul class="nav flex-column mt-3 nav-pills">
+        <ul class="nav flex-column nav-pills">
             <?php foreach (MenuHelper::getMenuItems() as $item) : ?>
                 <?php if (!isset($item['roles']) || auth()->user()->inGroup(...$item['roles'])) : ?>
                     <li class="nav-item">

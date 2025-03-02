@@ -7,8 +7,19 @@ use App\Models\UserModel;
 
 class ProfileQueryService
 {
+    /**
+     * @var array
+     */
     protected array $data = [];
+
+    /**
+     * @var int
+     */
     protected int $totalRecords = 0;
+
+    /**
+     * @var int
+     */
     protected int $filteredRecords = 0;
 
     /**

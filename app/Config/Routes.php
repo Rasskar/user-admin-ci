@@ -19,6 +19,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('/profile/create', 'Profiles\ProfileManagerController::create');
     $routes->get('/profile/export/(:segment)/(:num)', 'Profiles\ProfileExportController::export/$1/$2');
     $routes->get('/history', 'History\HistoryController::index', ['filter' => 'admin']);
+    $routes->get('/history/datatable', 'History\HistoryController::datatable', ['filter' => 'admin']);
     $routes->get('file/(:any)/(:any)', 'Files\FileController::getFile/$1/$2');
 });
 

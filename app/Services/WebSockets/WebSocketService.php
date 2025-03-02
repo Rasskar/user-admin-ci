@@ -3,8 +3,8 @@
 namespace App\Services\WebSockets;
 
 use CodeIgniter\CLI\CLI;
-use Swoole\Table;
 use Swoole\WebSocket\Server;
+use Swoole\Table;
 
 class WebSocketService
 {
@@ -28,7 +28,6 @@ class WebSocketService
      */
     protected int $port;
 
-
     public function __construct()
     {
         $this->host = getenv('SWOOLE_HOST') ?: '0.0.0.0';
@@ -41,24 +40,37 @@ class WebSocketService
         $this->server = new Server($this->host, $this->port);
     }
 
-    public function start()
+    /**
+     * @return void
+     */
+    public function start(): void
     {
-        $this->server->on("Start", function (Server $server) {
-            CLI::write("Swoole WebSocket server running on ws://{$this->host}:{$this->port}\n");
-        });
+        CLI::write("WebSocket + HTTP API: ws://{$this->host}:{$this->port}");
 
         $this->server->on("Open", function (Server $server, $request) {
-            CLI::write("New connection: #{$request->fd}\n");
+            CLI::write("WebSocket connection: #{$request->fd}");
             $this->clientsTable->set((string) $request->fd, ['fd' => $request->fd]);
         });
 
         $this->server->on("Message", function (Server $server, $frame) {
-            CLI::write("Message from the client #{$frame->fd}: {$frame->data}\n");
+            CLI::write("Message from the client #{$frame->fd}: {$frame->data}");
         });
 
         $this->server->on("Close", function (Server $server, $fd) {
-            CLI::write("Connection #{$fd} is closed\n");
+            CLI::write("Client disabled: #{$fd}");
             $this->clientsTable->del((string) $fd);
+        });
+
+        $this->server->on("Request", function ($request, $response) {
+            if ($request->server['request_uri'] === '/broadcast') {
+                CLI::write("HTTP Request to /broadcast");
+
+                if ($request->server['request_method'] !== 'POST') {
+                    $this->broadcast($request->rawContent());
+                } else {
+                    CLI::write("Method Not Allowed", 'red');
+                }
+            }
         });
 
         $this->server->start();
@@ -70,7 +82,7 @@ class WebSocketService
      */
     public function broadcast(string $message): void
     {
-        CLI::write("Start send message to client");
+        CLI::write("Sending a message: $message");
 
         foreach ($this->clientsTable as $client) {
             if ($this->server->isEstablished($client['fd'])) {

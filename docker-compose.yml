@@ -23,6 +23,7 @@ services:
       - SWOOLE_PORT=${SWOOLE_PORT:-9501}
     ports:
       - "${SWOOLE_PORT:-9501}:${SWOOLE_PORT:-9501}"
+      - "9502:9502"
 
   nginx:
     image: nginx:latest

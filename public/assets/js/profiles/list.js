@@ -50,26 +50,27 @@ $(document).ready(function() {
     let wsPort = 9501;
     let socket = new WebSocket(`ws://${wsHost}:${wsPort}`);
 
-    socket.onopen = function() {
+    socket.onopen = function () {
         console.log("WebSocket connected");
     };
 
-    socket.onmessage = function(event) {
-        let data = JSON.parse(event.data);
+    socket.onmessage = function (event) {
+        try {
+            let data = JSON.parse(event.data);
 
-        console.log(data);
-
-        if (data.action === "refresh" && data.channel === "profiles") {
-            console.log("Updating a table...");
-            table.ajax.reload(null, false);
+            if (data.action === "refresh" && data.channel === "profiles") {
+                table.ajax.reload(null, false);
+            }
+        } catch (error) {
+            console.error("WebSocket message parsing error:", error);
         }
     };
 
-    socket.onclose = function() {
-        console.log("WebSocket closed");
+    socket.onclose = function () {
+        console.log("WebSocket disconnected.");
     };
 
-    socket.onerror = function(error) {
-        console.error("Error WebSocket: ", error);
+    socket.onerror = function (error) {
+        console.error("WebSocket error", error);
     };
 });

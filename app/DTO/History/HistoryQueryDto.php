@@ -1,13 +1,12 @@
 <?php
 
-namespace App\DTO\Profiles;
+namespace App\DTO\History;
 
-class ProfileQueryDto
+class HistoryQueryDto
 {
     /**
      * @param int $draw
      * @param array $columns
-     * @param array $order
      * @param int $offset
      * @param int $limit
      * @param string|null $search
@@ -15,7 +14,6 @@ class ProfileQueryDto
     public function __construct(
         public int $draw,
         public array $columns,
-        public array $order,
         public int $offset,
         public int $limit,
         public string|null $search
