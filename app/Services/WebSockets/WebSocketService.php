@@ -65,7 +65,7 @@ class WebSocketService
             if ($request->server['request_uri'] === '/broadcast') {
                 CLI::write("HTTP Request to /broadcast");
 
-                if ($request->server['request_method'] !== 'POST') {
+                if ($request->server['request_method'] == 'POST') {
                     $this->broadcast($request->rawContent());
                 } else {
                     CLI::write("Method Not Allowed", 'red');

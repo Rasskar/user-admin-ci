@@ -2,11 +2,9 @@
 
 namespace App\Database\Seeds;
 
-use App\Modules\Infrastructure\Traits\TransactionTrait;
 use CodeIgniter\Database\Seeder;
 use Carbon\Carbon;
 use App\Models\UserModel;
-use App\Models\ProfileModel;
 use CodeIgniter\Shield\Authentication\Authenticators\Session;
 use CodeIgniter\Shield\Models\GroupModel;
 use CodeIgniter\Shield\Models\UserIdentityModel;

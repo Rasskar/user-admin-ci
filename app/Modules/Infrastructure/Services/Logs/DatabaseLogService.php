@@ -58,8 +58,8 @@ class DatabaseLogService implements LogInterface
             'model_id' => $modelId,
             'old_data' => !empty($changedFields) ? json_encode($changedFields) : null,
             'new_data' => !empty($newValues) ? json_encode($newValues) : null,
-            'ip' => $request->getIPAddress(),
-            'user_agent' => $request->getUserAgent(),
+            'ip' => php_sapi_name() === 'cli' ? '127.0.0.1' : $request->getIPAddress(),
+            'user_agent' => php_sapi_name() === 'cli' ? 'CLI' : $request->getUserAgent(),
         ];
 
         (new UserLogModel())->insert($logData);
